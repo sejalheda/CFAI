@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Algorithm Time Complexity Visualizer</title>
+  <meta name="description" content="Compare real-time performance of sorting algorithms and Python data structures." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="hero">
+    <div class="hero-glow"></div>
+    <div class="hero-content">
+      <div class="badge">⚡ DSA Benchmark Tool</div>
+      <h1>Algorithm Time Complexity <span class="gradient-text">Visualizer</span></h1>
+      <p class="hero-sub">
+        Enter numbers, click Run, and see real elapsed time measured by Python's
+        <code>time.perf_counter()</code> on the backend.
+      </p>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- ═══════════════════════════════════════════════
+         SECTION 1 — Bubble Sort vs Merge Sort
+    ════════════════════════════════════════════════ -->
+    <section class="panel" id="sort-panel">
+
+      <div class="panel-header">
+        <div class="panel-icon sort-icon">⟳</div>
+        <div>
+          <h2>Bubble Sort <span class="vs">vs</span> Merge Sort</h2>
+          <p class="panel-desc">
+            Demonstrates how <code>O(n²)</code> (Bubble) degrades compared to
+            <code>O(n log n)</code> (Merge) as input size grows.
+          </p>
+        </div>
+      </div>
+
+      <!-- Input -->
+      <div class="input-row">
+        <div class="input-group">
+          <label for="sortInput">Sequence of numbers (comma-separated)</label>
+          <input id="sortInput" type="text" placeholder="e.g. 64, 34, 25, 12, 22, 11, 90" />
+        </div>
+        <button id="sortBtn" class="btn btn-cyan" onclick="runSort()">
+          ▶ Run Benchmark
+        </button>
+      </div>
+
+      <!-- Quick fill -->
+      <div class="quick-fill">
+        <span class="qf-label">Quick fill →</span>
+        <button class="chip chip-cyan" onclick="fillSort(10)">10</button>
+        <button class="chip chip-cyan" onclick="fillSort(100)">100</button>
+        <button class="chip chip-cyan" onclick="fillSort(500)">500</button>
+        <button class="chip chip-cyan" onclick="fillSort(2000)">2 000</button>
+      </div>
+
+      <!-- Complexity legend -->
+      <div class="complexity-legend">
+        <div class="legend-item">
+          <span class="dot dot-cyan"></span>
+          <span>Bubble Sort &nbsp;<code>O(n²)</code> — quadratic</span>
+        </div>
+        <div class="legend-item">
+          <span class="dot dot-purple"></span>
+          <span>Merge Sort &nbsp;<code>O(n log n)</code> — log-linear</span>
+        </div>
+      </div>
+
+      <!-- Loader -->
+      <div id="sortLoader" class="loader hidden">
+        <div class="spinner spin-cyan"></div>
+        <span>Running algorithms on the Python backend…</span>
+      </div>
+
+      <!-- Results -->
+      <div id="sortResult" class="result-grid hidden"></div>
+
+    </section>
+
+    <!-- ═══════════════════════════════════════════════
+         SECTION 2 — List vs Set membership check
+    ════════════════════════════════════════════════ -->
+    <section class="panel" id="set-panel">
+
+      <div class="panel-header">
+        <div class="panel-icon set-icon">⊆</div>
+        <div>
+          <h2>List Search <span class="vs">vs</span> Set Lookup</h2>
+          <p class="panel-desc">
+            Python <code>list</code> scans every element: <code>O(n)</code>.
+            Python <code>set</code> uses a hash table: <code>O(1)</code>.
+          </p>
+        </div>
+      </div>
+
+      <!-- Input -->
+      <div class="input-row">
+        <div class="input-group">
+          <label for="listInput">Sequence with duplicates (comma-separated)</label>
+          <input id="listInput" type="text" placeholder="e.g. 1, 2, 2, 3, 4, 4, 5" />
+        </div>
+        <div class="input-group input-sm">
+          <label for="targetInput">Search target</label>
+          <input id="targetInput" type="number" placeholder="e.g. 5" />
+        </div>
+        <button id="setBtn" class="btn btn-purple" onclick="runSet()">
+          ▶ Run Benchmark
+        </button>
+      </div>
+
+      <!-- Quick fill -->
+      <div class="quick-fill">
+        <span class="qf-label">Quick fill →</span>
+        <button class="chip chip-purple" onclick="fillSet(100)">100</button>
+        <button class="chip chip-purple" onclick="fillSet(1000)">1 000</button>
+        <button class="chip chip-purple" onclick="fillSet(5000)">5 000</button>
+        <button class="chip chip-purple" onclick="fillSet(20000)">20 000</button>
+      </div>
+
+      <!-- Complexity legend -->
+      <div class="complexity-legend">
+        <div class="legend-item">
+          <span class="dot dot-orange"></span>
+          <span>List linear search &nbsp;<code>O(n)</code> — linear</span>
+        </div>
+        <div class="legend-item">
+          <span class="dot dot-green"></span>
+          <span>Set hash lookup &nbsp;<code>O(1)</code> — constant</span>
+        </div>
+      </div>
+
+      <!-- Loader -->
+      <div id="setLoader" class="loader hidden">
+        <div class="spinner spin-purple"></div>
+        <span>Running lookup on the Python backend…</span>
+      </div>
+
+      <!-- Results -->
+      <div id="setResult" class="result-grid hidden"></div>
+
+    </section>
+
+  </main>
+
+  <footer>
+    <p>
+      Backend: <strong>Python Flask</strong> + <code>time.perf_counter()</code>
+      &nbsp;·&nbsp; DSA Project — Algorithm Time Complexity Visualizer
+    </p>
+  </footer>
+
+  <script src="main.js"></script>
+</body>
+</html>
