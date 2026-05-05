@@ -1,0 +1,108 @@
+# ⚡ Algorithm Complexity Visualizer
+
+> *"See the difference — measure it, visualize it, understand it."*
+
+---
+
+## 📌 Overview
+
+**Algorithm Complexity Visualizer** is an interactive web application that lets you compare how different algorithms and data structures perform on real input data — **measured live using Python's `time` module**. No theory alone: actual elapsed time is computed and displayed on the frontend.
+
+Two core comparisons are supported:
+
+| Module | What it compares |
+|--------|-----------------|
+| 🔀 **Sorting Algorithms** | Bubble Sort `O(n²)` vs Merge Sort `O(n log n)` |
+| 🗂️ **Data Structures** | List membership `O(n)` vs Set membership `O(1)` |
+
+---
+
+## 🛠️ Tech Stack
+
+| Layer | Technology |
+|-------|------------|
+| **Frontend** | HTML, CSS, JavaScript |
+| **Backend** | Python + Flask |
+| **Visualization** | Chart.js |
+| **Timing** | Python `time.perf_counter()` |
+
+---
+
+## 📁 Project Structure
+
+```
+CFAI/
+├── README.md
+├── requirements.txt
+├── .gitignore
+├── app.py                    # Flask backend (API endpoints)
+├── static/
+│   ├── css/
+│   │   └── style.css         # Styling
+│   └── js/
+│       └── main.js           # Frontend logic
+└── templates/
+    └── index.html            # Main UI page
+```
+
+---
+
+## 🚀 How to Run
+
+```bash
+# 1. Clone the repository
+git clone https://github.com/sejalheda/CFAI.git
+cd CFAI
+
+# 2. Install Python dependencies
+pip install -r requirements.txt
+
+# 3. Start the Flask server
+python app.py
+
+# 4. Open your browser at
+http://127.0.0.1:5000
+```
+
+---
+
+## 📅 Project Progress
+
+| Day | Task | Status |
+|-----|------|--------|
+| Day 1 | Project setup, README, folder structure | ✅ Done |
+| Day 2 | Flask backend – Sorting algorithms | ⏳ Pending |
+| Day 3 | Frontend base – HTML + CSS | ⏳ Pending |
+| Day 4 | Sorting comparison UI + JS | ⏳ Pending |
+| Day 5 | Flask backend – List vs Set | ⏳ Pending |
+| Day 6 | Data structure comparison UI | ⏳ Pending |
+| Day 7 | Chart.js visualizations | ⏳ Pending |
+| Day 8 | UI polish, animations, responsive | ⏳ Pending |
+| Day 9 | Testing & bug fixes | ⏳ Pending |
+| Day 10 | Final cleanup & v1.0 release | ⏳ Pending |
+
+---
+
+## 🔮 Future Work
+
+- Add more sorting algorithms (Quick Sort, Heap Sort, Insertion Sort)
+- Support custom algorithm input by the user
+- Add space complexity comparison
+- Export results as PDF/CSV
+- Deploy to cloud (Render / Railway)
+- Add unit tests for backend
+
+---
+
+## 👥 Team
+
+| Name | Role |
+|------|------|
+| **Sejal Heda** | Frontend Development, UI Design |
+| **Bhavya** | Backend Development, Algorithm Logic |
+
+---
+
+## 📜 License
+
+This project is built for educational purposes as part of a course assignment.
