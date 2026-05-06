@@ -25,6 +25,39 @@ def bubble_sort(arr):
     return a, comparisons, swaps
 
 
+def merge_sort(arr):
+    """Merge Sort — O(n log n) time complexity.
+    Divides array into halves, sorts each, then merges them.
+    """
+    comparisons = [0]
+
+    def _merge_sort(a):
+        if len(a) <= 1:
+            return a
+        mid = len(a) // 2
+        left = _merge_sort(a[:mid])
+        right = _merge_sort(a[mid:])
+        return _merge(left, right)
+
+    def _merge(left, right):
+        result = []
+        i = j = 0
+        while i < len(left) and j < len(right):
+            comparisons[0] += 1
+            if left[i] <= right[j]:
+                result.append(left[i])
+                i += 1
+            else:
+                result.append(right[j])
+                j += 1
+        result.extend(left[i:])
+        result.extend(right[j:])
+        return result
+
+    sorted_arr = _merge_sort(arr.copy())
+    return sorted_arr, comparisons[0]
+
+
 @app.route("/")
 def index():
     return render_template("index.html")
