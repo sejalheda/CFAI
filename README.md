@@ -47,24 +47,6 @@ CFAI/
 
 ---
 
-## 🚀 How to Run
-
-```bash
-# 1. Clone the repository
-git clone https://github.com/sejalheda/CFAI.git
-cd CFAI
-
-# 2. Install Python dependencies
-pip install -r requirements.txt
-
-# 3. Start the Flask server
-python app.py
-
-# 4. Open your browser at
-http://127.0.0.1:5000
-```
-
----
 
 ## 📅 Project Progress
 
@@ -96,13 +78,8 @@ http://127.0.0.1:5000
 
 ## 👥 Team
 
-| Name | Role |
-|------|------|
-| **Sejal Heda** | Frontend Development, UI Design |
-| **Bhavya** | Backend Development, Algorithm Logic |
 
----
+| **Sejal** | 
+| **Bhavya** |
 
-## 📜 License
 
-This project is built for educational purposes as part of a course assignment.
