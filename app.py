@@ -118,7 +118,13 @@ def api_sort():
         winner = "Merge Sort"
         speedup = round(t_bubble / t_merge, 2) if t_merge > 0 else 1.0
 
-    return jsonify({"winner": winner, "speedup": speedup})
+    return jsonify({
+        "bubble_sort": bubble_res,
+        "merge_sort": merge_res,
+        "winner": winner,
+        "speedup": speedup,
+        "input_size": len(numbers)
+    })
 
 
 if __name__ == "__main__":
