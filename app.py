@@ -59,6 +59,29 @@ def merge_sort(arr):
     return sorted_arr, comparisons[0]
 
 
+def measure_sorting_performance(sort_fn, arr, is_bubble=False):
+    """Measures execution time and formats results for a sorting function."""
+    t_start = time.perf_counter()
+    if is_bubble:
+        sorted_arr, comparisons, swaps = sort_fn(arr)
+    else:
+        sorted_arr, comparisons = sort_fn(arr)
+        swaps = "N/A (Merge Sort uses auxiliary space, not in-place swaps)"
+    t_end = time.perf_counter()
+    
+    elapsed_seconds = t_end - t_start
+    elapsed_ms = elapsed_seconds * 1000
+    
+    return {
+        "elapsed_seconds": elapsed_seconds,
+        "elapsed_ms": round(elapsed_ms, 6),
+        "comparisons": comparisons,
+        "swaps": swaps,
+        "best_case": "O(n) - sorted array" if is_bubble else "O(n log n)",
+        "worst_case": "O(n^2) - reverse sorted" if is_bubble else "O(n log n)"
+    }
+
+
 @app.route("/")
 def index():
     return render_template("index.html")
