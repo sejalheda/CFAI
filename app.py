@@ -89,8 +89,25 @@ def index():
 
 @app.route("/api/sort", methods=["POST"])
 def api_sort():
-    # Skeleton implementation
-    return jsonify({"message": "Sorting API skeleton"})
+    data = request.get_json(silent=True)
+    if not data or "numbers" not in data:
+        return jsonify({"error": "Invalid request. 'numbers' is required."}), 400
+    
+    numbers = data["numbers"]
+    if not isinstance(numbers, list):
+        return jsonify({"error": "'numbers' must be a list of numbers."}), 400
+        
+    if len(numbers) < 2:
+        return jsonify({"error": "Please provide at least 2 numbers."}), 400
+        
+    if len(numbers) > 10000:
+        return jsonify({"error": "Maximum 10,000 numbers allowed."}), 400
+        
+    for idx, x in enumerate(numbers):
+        if not isinstance(x, (int, float)):
+            return jsonify({"error": f"Item at index {idx} is not a valid number."}), 400
+            
+    return jsonify({"message": "Valid payload", "input_size": len(numbers)})
 
 
 if __name__ == "__main__":
