@@ -109,7 +109,16 @@ def api_sort():
             
     bubble_res = measure_sorting_performance(bubble_sort, numbers, is_bubble=True)
     merge_res = measure_sorting_performance(merge_sort, numbers, is_bubble=False)
-    return jsonify({"bubble_sort": bubble_res, "merge_sort": merge_res})
+    t_bubble = bubble_res["elapsed_seconds"]
+    t_merge = merge_res["elapsed_seconds"]
+    if t_bubble < t_merge:
+        winner = "Bubble Sort"
+        speedup = round(t_merge / t_bubble, 2) if t_bubble > 0 else 1.0
+    else:
+        winner = "Merge Sort"
+        speedup = round(t_bubble / t_merge, 2) if t_merge > 0 else 1.0
+
+    return jsonify({"winner": winner, "speedup": speedup})
 
 
 if __name__ == "__main__":
