@@ -89,26 +89,45 @@ def index():
 
 @app.route("/api/sort", methods=["POST"])
 def api_sort():
+    """API Endpoint to compare Bubble Sort and Merge Sort performance.
+    
+    Accepts POST request with a JSON body:
+    {
+        "numbers": [list of numbers to be sorted]
+    }
+    
+    Returns JSON response containing timing, comparison count, swap count,
+    and complexity metadata for both algorithms, along with the performance winner.
+    """
+    # 1. Parse JSON payload safely
     data = request.get_json(silent=True)
     if not data or "numbers" not in data:
         return jsonify({"error": "Invalid request. 'numbers' is required."}), 400
     
+    # 2. Validate input list presence and structure
     numbers = data["numbers"]
     if not isinstance(numbers, list):
         return jsonify({"error": "'numbers' must be a list of numbers."}), 400
         
+    # 3. Validate input array length limits (min 2, max 10,000)
     if len(numbers) < 2:
         return jsonify({"error": "Please provide at least 2 numbers."}), 400
         
     if len(numbers) > 10000:
         return jsonify({"error": "Maximum 10,000 numbers allowed."}), 400
         
+    # 4. Verify all elements in list are numeric types (int, float)
     for idx, x in enumerate(numbers):
         if not isinstance(x, (int, float)):
             return jsonify({"error": f"Item at index {idx} is not a valid number."}), 400
             
+    # 5. Measure and capture Bubble Sort performance
     bubble_res = measure_sorting_performance(bubble_sort, numbers, is_bubble=True)
+    
+    # 6. Measure and capture Merge Sort performance
     merge_res = measure_sorting_performance(merge_sort, numbers, is_bubble=False)
+    
+    # 7. Calculate performance speedup and identify the winner
     t_bubble = bubble_res["elapsed_seconds"]
     t_merge = merge_res["elapsed_seconds"]
     if t_bubble < t_merge:
@@ -118,6 +137,7 @@ def api_sort():
         winner = "Merge Sort"
         speedup = round(t_bubble / t_merge, 2) if t_merge > 0 else 1.0
 
+    # 8. Return formatted comparison metrics
     return jsonify({
         "bubble_sort": bubble_res,
         "merge_sort": merge_res,
