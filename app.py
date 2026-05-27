@@ -87,5 +87,11 @@ def index():
     return render_template("index.html")
 
 
+@app.route("/api/sort", methods=["POST"])
+def api_sort():
+    # Skeleton implementation
+    return jsonify({"message": "Sorting API skeleton"})
+
+
 if __name__ == "__main__":
     app.run(debug=True, port=5000)
