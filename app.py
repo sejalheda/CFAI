@@ -108,7 +108,8 @@ def api_sort():
             return jsonify({"error": f"Item at index {idx} is not a valid number."}), 400
             
     bubble_res = measure_sorting_performance(bubble_sort, numbers, is_bubble=True)
-    return jsonify({"bubble_sort": bubble_res})
+    merge_res = measure_sorting_performance(merge_sort, numbers, is_bubble=False)
+    return jsonify({"bubble_sort": bubble_res, "merge_sort": merge_res})
 
 
 if __name__ == "__main__":
