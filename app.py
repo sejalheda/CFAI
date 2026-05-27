@@ -107,7 +107,8 @@ def api_sort():
         if not isinstance(x, (int, float)):
             return jsonify({"error": f"Item at index {idx} is not a valid number."}), 400
             
-    return jsonify({"message": "Valid payload", "input_size": len(numbers)})
+    bubble_res = measure_sorting_performance(bubble_sort, numbers, is_bubble=True)
+    return jsonify({"bubble_sort": bubble_res})
 
 
 if __name__ == "__main__":
