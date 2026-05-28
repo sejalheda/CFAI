@@ -46,6 +46,40 @@
         </div>
       </div>
     </section>
+
+    <section id="sorting" class="module-section">
+      <div class="section-inner">
+        <div class="section-header">
+          <span class="section-badge sort-badge">Sorting Module</span>
+          <h2 class="section-title">Bubble Sort <span class="vs-badge">VS</span> Merge Sort</h2>
+          <p class="section-desc">
+            Compare Bubble Sort's quadratic behavior with Merge Sort's logarithmic time complexity on the same input numbers.
+          </p>
+        </div>
+
+        <div class="input-panel">
+          <div class="input-group">
+            <label class="input-label" for="sort-input">Input Numbers (comma-separated)</label>
+            <textarea id="sort-input" class="input-textarea" placeholder="e.g., 5, 2, 9, 1, 5, 6" rows="3"></textarea>
+          </div>
+
+          <div class="quick-fill-row">
+            <span class="quick-label">Quick Fill:</span>
+            <button class="chip" type="button" onclick="fillSort(10)">10 Random</button>
+            <button class="chip" type="button" onclick="fillSort(100)">100 Random</button>
+            <button class="chip" type="button" onclick="fillSort(1000)">1000 Random</button>
+            <button class="chip" type="button" onclick="fillSort(5000)">5000 Random</button>
+          </div>
+
+          <button id="sort-run-btn" class="btn btn--primary btn--wide" type="button" onclick="runSort()">
+            <span id="sort-btn-text">Run Comparison</span>
+            <span id="sort-btn-loader" class="btn-loader hidden"></span>
+          </button>
+          
+          <div id="sort-error" class="error-box hidden"></div>
+        </div>
+      </div>
+    </section>
   </div>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </body>
