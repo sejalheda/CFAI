@@ -78,6 +78,51 @@
           
           <div id="sort-error" class="error-box hidden"></div>
         </div>
+
+        <div id="sort-results" class="hidden">
+          <div class="results-grid">
+            <!-- Bubble Sort Card -->
+            <div class="result-card bubble-card">
+              <div class="card-badge">Algorithm</div>
+              <h3 class="card-algo-name">Bubble Sort</h3>
+              <div class="card-complexity">
+                <span class="complexity-label">Average Time Complexity</span>
+                <span class="complexity-value bubble-color">O(n²)</span>
+              </div>
+              <div id="sort-bubble-metrics" class="card-metrics">
+                <!-- Filled dynamically by main.js -->
+              </div>
+            </div>
+
+            <!-- Winner Divider -->
+            <div class="result-card winner-divider">
+              <span class="winner-icon">🏆</span>
+              <span class="winner-label">Winner</span>
+              <span id="sort-winner-name" class="winner-name">-</span>
+              <span class="speedup-label">Speedup</span>
+              <span id="sort-speedup" class="speedup-value">-</span>
+            </div>
+
+            <!-- Merge Sort Card -->
+            <div class="result-card merge-card">
+              <div class="card-badge">Algorithm</div>
+              <h3 class="card-algo-name">Merge Sort</h3>
+              <div class="card-complexity">
+                <span class="complexity-label">Average Time Complexity</span>
+                <span class="complexity-value merge-color">O(n log n)</span>
+              </div>
+              <div id="sort-merge-metrics" class="card-metrics">
+                <!-- Filled dynamically by main.js -->
+              </div>
+            </div>
+          </div>
+
+          <!-- Chart Container -->
+          <div id="sort-chart-container" class="chart-container hidden">
+            <h3 class="chart-title">Execution Time Comparison</h3>
+            <canvas id="sort-chart"></canvas>
+          </div>
+        </div>
       </div>
     </section>
   </div>
