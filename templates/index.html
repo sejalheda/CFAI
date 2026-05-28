@@ -162,6 +162,51 @@
           
           <div id="set-error" class="error-box hidden"></div>
         </div>
+
+        <div id="set-results" class="hidden">
+          <div class="results-grid">
+            <!-- List Card -->
+            <div class="result-card list-card">
+              <div class="card-badge">Data Structure</div>
+              <h3 class="card-algo-name">List Membership</h3>
+              <div class="card-complexity">
+                <span class="complexity-label">Average Time Complexity</span>
+                <span class="complexity-value list-color">O(n)</span>
+              </div>
+              <div id="set-list-metrics" class="card-metrics">
+                <!-- Filled dynamically by main.js -->
+              </div>
+            </div>
+
+            <!-- Winner Divider -->
+            <div class="result-card winner-divider">
+              <span class="winner-icon">🏆</span>
+              <span class="winner-label">Winner</span>
+              <span id="set-winner-name" class="winner-name">-</span>
+              <span class="speedup-label">Speedup</span>
+              <span id="set-speedup" class="speedup-value">-</span>
+            </div>
+
+            <!-- Set Card -->
+            <div class="result-card set-card">
+              <div class="card-badge">Data Structure</div>
+              <h3 class="card-algo-name">Set Membership</h3>
+              <div class="card-complexity">
+                <span class="complexity-label">Average Time Complexity</span>
+                <span class="complexity-value set-color">O(1)</span>
+              </div>
+              <div id="set-set-metrics" class="card-metrics">
+                <!-- Filled dynamically by main.js -->
+              </div>
+            </div>
+          </div>
+
+          <!-- Chart Container -->
+          <div id="set-chart-container" class="chart-container hidden">
+            <h3 class="chart-title">Lookup Time Comparison</h3>
+            <canvas id="set-chart"></canvas>
+          </div>
+        </div>
       </div>
     </section>
   </div>
