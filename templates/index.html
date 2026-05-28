@@ -11,7 +11,7 @@
   <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
 </head>
 <body>
-  <div id="app">
+  <div id="app" role="main">
     <header class="site-header">
       <div class="header-inner">
         <a href="#" class="logo">
@@ -76,7 +76,7 @@
             <span id="sort-btn-loader" class="btn-loader hidden"></span>
           </button>
           
-          <div id="sort-error" class="error-box hidden"></div>
+          <div id="sort-error" class="error-box hidden" aria-live="polite"></div>
         </div>
 
         <div id="sort-results" class="hidden">
@@ -160,7 +160,7 @@
             <span id="set-btn-loader" class="btn-loader hidden"></span>
           </button>
           
-          <div id="set-error" class="error-box hidden"></div>
+          <div id="set-error" class="error-box hidden" aria-live="polite"></div>
         </div>
 
         <div id="set-results" class="hidden">
