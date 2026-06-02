@@ -79,6 +79,72 @@ function hideError(boxId) {
 
 
 /* ─────────────────────────────────────────────────────────
+   Live Visualizer State & Dom Initialization
+───────────────────────────────────────────────────────── */
+var visPlaying = false;
+var visStopRequested = false;
+var visDelayMs = 150; // Delay between steps in ms
+
+/** Draws the initial vertical bars for visualization */
+function drawVisualizerBars(numbers) {
+  var bubbleContainer = document.getElementById("bubble-bars-container");
+  var mergeContainer = document.getElementById("merge-bars-container");
+  if (!bubbleContainer || !mergeContainer) return;
+  
+  bubbleContainer.innerHTML = "";
+  mergeContainer.innerHTML = "";
+  
+  if (numbers.length === 0) return;
+  
+  var max = Math.max.apply(null, numbers);
+  var min = Math.min.apply(null, numbers);
+  var range = (max - min) || 1;
+
+  numbers.forEach(function(val, idx) {
+    var heightPercent = 10 + ((val - min) / range) * 85;
+    
+    // Bubble bar
+    var bBar = document.createElement("div");
+    bBar.className = "bar";
+    bBar.style.height = heightPercent + "%";
+    bBar.id = "bubble-bar-" + idx;
+    bBar.setAttribute("title", val);
+    bubbleContainer.appendChild(bBar);
+    
+    // Merge bar
+    var mBar = document.createElement("div");
+    mBar.className = "bar";
+    mBar.style.height = heightPercent + "%";
+    mBar.id = "merge-bar-" + idx;
+    mBar.setAttribute("title", val);
+    mergeContainer.appendChild(mBar);
+  });
+}
+
+/** Toggles the visibility of the visualizer based on array length */
+function checkAndToggleVisualizer(numbers) {
+  var panel = document.getElementById("live-visualizer");
+  if (!panel) return false;
+  
+  if (numbers.length >= 2 && numbers.length <= 50) {
+    panel.classList.add("active");
+    drawVisualizerBars(numbers);
+    return true;
+  } else {
+    panel.classList.remove("active");
+    return false;
+  }
+}
+
+/** A helper promise delay function */
+function sleep(ms) {
+  return new Promise(function(resolve) {
+    setTimeout(resolve, ms);
+  });
+}
+
+
+/* ─────────────────────────────────────────────────────────
    Quick Fill helpers
 ───────────────────────────────────────────────────────── */
 
