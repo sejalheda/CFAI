@@ -98,6 +98,41 @@
           <div id="sort-error" class="error-box hidden" aria-live="polite"></div>
         </div>
 
+        <!-- Complexity Reference Table -->
+        <div class="complexity-table-wrapper">
+          <h3 class="table-title">Theoretical Complexity Reference</h3>
+          <table class="complexity-table">
+            <thead>
+              <tr>
+                <th>Algorithm</th>
+                <th>Best Case</th>
+                <th>Average Case</th>
+                <th>Worst Case</th>
+                <th>Space Complexity</th>
+                <th>Stability</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="algo-td bubble-color">Bubble Sort</td>
+                <td><code>O(n)</code></td>
+                <td><code>O(n²)</code></td>
+                <td><code>O(n²)</code></td>
+                <td><code>O(1)</code></td>
+                <td><span class="badge badge--success">Stable</span></td>
+              </tr>
+              <tr>
+                <td class="algo-td merge-color">Merge Sort</td>
+                <td><code>O(n log n)</code></td>
+                <td><code>O(n log n)</code></td>
+                <td><code>O(n log n)</code></td>
+                <td><code>O(n)</code></td>
+                <td><span class="badge badge--success">Stable</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
         <div id="sort-results" class="hidden">
           <div class="results-grid">
             <!-- Bubble Sort Card -->
