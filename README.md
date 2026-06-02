@@ -55,7 +55,7 @@ CFAI/
 | Day 1 | Project setup, README, folder structure | ✅ Done |
 | Day 2 | Flask backend – Sorting algorithms | ✅ Done |
 | Day 3 | Frontend base – HTML + CSS | ✅ Done |
-| Day 4 | Sorting comparison UI + JS | ⏳ Pending |
+| Day 4 | Sorting comparison UI + JS | ✅ Done |
 | Day 5 | Flask backend – List vs Set | ⏳ Pending |
 | Day 6 | Data structure comparison UI | ⏳ Pending |
 | Day 7 | Chart.js visualizations | ⏳ Pending |
