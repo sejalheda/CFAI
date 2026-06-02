@@ -736,6 +736,131 @@ code {
   border: 1px solid rgba(52, 211, 153, 0.3);
 }
 
+/* Live Sorting Visualizer styling */
+.live-visualizer-panel {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  margin-bottom: 32px;
+  display: none; /* Show only if input size is <= 50 */
+}
+
+.live-visualizer-panel.active {
+  display: block;
+}
+
+.visualizer-header {
+  margin-bottom: 20px;
+}
+
+.visualizer-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 4px;
+}
+
+.visualizer-subtitle {
+  font-size: .82rem;
+  color: var(--text-secondary);
+}
+
+.visualizer-playground {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+@media (max-width: 768px) {
+  .visualizer-playground {
+    grid-template-columns: 1fr;
+  }
+}
+
+.visualizer-column {
+  background: var(--bg-card-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.visualizer-col-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.bubble-badge {
+  background: rgba(248, 113, 113, 0.12);
+  color: var(--bubble);
+  border: 1px solid rgba(248, 113, 113, 0.3);
+}
+
+.merge-badge {
+  background: rgba(52, 211, 153, 0.12);
+  color: var(--merge);
+  border: 1px solid rgba(52, 211, 153, 0.3);
+}
+
+.visualizer-stats {
+  font-family: var(--font-mono);
+  font-size: .78rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.bars-container {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  height: 180px;
+  background: var(--bg);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-sm);
+  padding: 12px;
+  gap: 3px;
+  overflow: hidden;
+}
+
+.bar {
+  flex: 1;
+  background-color: var(--text-muted);
+  border-radius: 2px 2px 0 0;
+  transition: height 0.1s ease, background-color 0.1s ease;
+  min-width: 2px;
+}
+
+.bar.bubble-bar-active {
+  background-color: var(--bubble);
+  box-shadow: 0 0 8px var(--bubble);
+}
+
+.bar.merge-bar-active {
+  background-color: var(--merge);
+  box-shadow: 0 0 8px var(--merge);
+}
+
+.bar.comparing {
+  background-color: var(--gold);
+  box-shadow: 0 0 8px var(--gold);
+}
+
+.bar.swapping {
+  background-color: #f43f5e;
+  box-shadow: 0 0 8px #f43f5e;
+}
+
+.bar.sorted {
+  background-color: #10b981;
+  box-shadow: 0 0 8px #10b981;
+}
+
 /* ─────────────────────────────────────────────────────────
    RESPONSIVE
    ───────────────────────────────────────────────────────── */
