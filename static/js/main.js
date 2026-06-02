@@ -143,6 +143,90 @@ function sleep(ms) {
   });
 }
 
+/** Step-by-step Bubble Sort visualizer with highlight animations */
+async function visualizeBubbleSort(arr) {
+  var a = arr.slice();
+  var n = a.length;
+  var comparisons = 0;
+  var swaps = 0;
+  var statsEl = document.getElementById("bubble-vis-stats");
+
+  for (var i = 0; i < n; i++) {
+    for (var j = 0; j < n - i - 1; j++) {
+      if (visStopRequested) return;
+
+      var bar1 = document.getElementById("bubble-bar-" + j);
+      var bar2 = document.getElementById("bubble-bar-" + (j + 1));
+
+      if (bar1 && bar2) {
+        bar1.classList.add("comparing");
+        bar2.classList.add("comparing");
+      }
+
+      comparisons++;
+      if (statsEl) {
+        statsEl.textContent = "Comparisons: " + comparisons + " | Swaps: " + swaps;
+      }
+
+      await sleep(visDelayMs);
+      if (visStopRequested) return;
+
+      if (a[j] > a[j + 1]) {
+        if (bar1 && bar2) {
+          bar1.classList.remove("comparing");
+          bar2.classList.remove("comparing");
+          bar1.classList.add("swapping");
+          bar2.classList.add("swapping");
+        }
+
+        // Swap state in array
+        var temp = a[j];
+        a[j] = a[j + 1];
+        a[j + 1] = temp;
+
+        // Swap heights/titles in DOM
+        if (bar1 && bar2) {
+          var h1 = bar1.style.height;
+          var h2 = bar2.style.height;
+          bar1.style.height = h2;
+          bar2.style.height = h1;
+
+          var t1 = bar1.getAttribute("title");
+          var t2 = bar2.getAttribute("title");
+          bar1.setAttribute("title", t2);
+          bar2.setAttribute("title", t1);
+        }
+
+        swaps++;
+        if (statsEl) {
+          statsEl.textContent = "Comparisons: " + comparisons + " | Swaps: " + swaps;
+        }
+
+        await sleep(visDelayMs);
+        if (visStopRequested) return;
+      }
+
+      if (bar1 && bar2) {
+        bar1.classList.remove("comparing", "swapping");
+        bar2.classList.remove("comparing", "swapping");
+      }
+    }
+
+    // Mark tail element as sorted
+    var sortedBar = document.getElementById("bubble-bar-" + (n - i - 1));
+    if (sortedBar) {
+      sortedBar.classList.add("sorted");
+    }
+  }
+
+  // Highlight all bars as fully sorted
+  for (var i = 0; i < n; i++) {
+    var bar = document.getElementById("bubble-bar-" + i);
+    if (bar) {
+      bar.classList.add("sorted");
+    }
+  }
+}
 
 /* ─────────────────────────────────────────────────────────
    Quick Fill helpers
