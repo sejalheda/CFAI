@@ -1,7 +1,7 @@
 /*
  * Algorithm Complexity Visualizer — main.js
  * Calls Flask backend at http://127.0.0.1:5000
- * Modules: Sorting (Bubble vs Merge) | Membership (List vs Set)
+ * Modules: Sorting (Bubble vs Merge) with Live DOM Visualization | Membership (List vs Set)
  */
 
 const API_BASE = "";   // Empty = same origin (Flask serves the page too)
