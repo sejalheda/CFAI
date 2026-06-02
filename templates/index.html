@@ -71,6 +71,17 @@
             <button class="preset-btn" id="preset-almost" type="button" onclick="selectDistribution('almost')">Almost Sorted</button>
           </div>
 
+          <div class="slider-group">
+            <div class="slider-header">
+              <span class="quick-label">Array Size:</span>
+              <span class="slider-value-display" id="sort-size-val">100</span>
+            </div>
+            <div class="slider-control-row">
+              <input type="range" id="sort-size-slider" min="10" max="5000" step="10" value="100" class="range-slider" oninput="updateSortSizeDisplay(this.value)">
+              <button class="chip chip--generate" type="button" onclick="generateFromSlider()">Generate Custom</button>
+            </div>
+          </div>
+
           <div class="quick-fill-row">
             <span class="quick-label">Quick Fill:</span>
             <button class="chip" type="button" onclick="fillSort(10)">10 elements</button>
