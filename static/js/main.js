@@ -82,9 +82,69 @@ function hideError(boxId) {
    Quick Fill helpers
 ───────────────────────────────────────────────────────── */
 
-/** Fill the sort input with n random numbers */
+var currentSortDistribution = 'random';
+
+/** Select the active array distribution preset */
+function selectDistribution(dist) {
+  currentSortDistribution = dist;
+  var buttons = ['random', 'sorted', 'reversed', 'almost'];
+  buttons.forEach(function(b) {
+    var btn = document.getElementById('preset-' + b);
+    if (btn) {
+      if (b === dist) {
+        btn.classList.add('active');
+      } else {
+        btn.classList.remove('active');
+      }
+    }
+  });
+}
+
+/** Update the text showing the size selected by the slider */
+function updateSortSizeDisplay(val) {
+  document.getElementById('sort-size-val').textContent = val;
+}
+
+/** Generate an array of size specified by the range slider */
+function generateFromSlider() {
+  var size = parseInt(document.getElementById('sort-size-slider').value) || 100;
+  fillSort(size);
+}
+
+/** Generate array numbers based on distribution type */
+function generateArrayWithDistribution(size, dist) {
+  var arr = [];
+  if (dist === 'sorted') {
+    for (var i = 1; i <= size; i++) {
+      arr.push(i);
+    }
+  } else if (dist === 'reversed') {
+    for (var i = size; i >= 1; i--) {
+      arr.push(i);
+    }
+  } else if (dist === 'almost') {
+    for (var i = 1; i <= size; i++) {
+      arr.push(i);
+    }
+    // Perform swaps in about 10% of elements to make it "almost sorted"
+    var swapsCount = Math.max(1, Math.floor(size * 0.05));
+    for (var s = 0; s < swapsCount; s++) {
+      var i1 = Math.floor(Math.random() * size);
+      var i2 = Math.floor(Math.random() * size);
+      var temp = arr[i1];
+      arr[i1] = arr[i2];
+      arr[i2] = temp;
+    }
+  } else {
+    // Default is random
+    arr = randomArray(size);
+  }
+  return arr;
+}
+
+/** Fill the sort input with n numbers generated according to current distribution */
 function fillSort(n) {
-  var arr = randomArray(n);
+  var arr = generateArrayWithDistribution(n, currentSortDistribution);
   document.getElementById("sort-input").value = arr.join(", ");
 }
 
