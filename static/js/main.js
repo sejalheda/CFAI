@@ -136,11 +136,105 @@ function checkAndToggleVisualizer(numbers) {
   }
 }
 
-/** A helper promise delay function */
-function sleep(ms) {
-  return new Promise(function(resolve) {
+var visPaused = false;
+var currentNumbersToVis = [];
+
+/** A helper promise delay function supporting pause and stop checks */
+async function sleep(ms) {
+  await new Promise(function(resolve) {
     setTimeout(resolve, ms);
   });
+  while (visPaused && !visStopRequested) {
+    await new Promise(function(resolve) {
+      setTimeout(resolve, 50);
+    });
+  }
+}
+
+/** Update visualizer animation delay dynamically */
+function updateVisDelay(val) {
+  visDelayMs = parseInt(val) || 150;
+  var display = document.getElementById("vis-delay-val");
+  if (display) {
+    display.textContent = val + "ms";
+  }
+}
+
+/** Toggle play/pause state for visualizer */
+async function toggleVisPlayback() {
+  var playBtnText = document.getElementById("vis-play-text");
+  var playBtnIcon = document.getElementById("vis-play-icon");
+
+  if (!visPlaying) {
+    var raw = document.getElementById("sort-input").value;
+    var numbers = parseNumbers(raw);
+
+    if (numbers.length < 2 || numbers.length > 50) {
+      showError("sort-error", "Please enter between 2 and 50 numbers to run the live visualizer.");
+      return;
+    }
+
+    visPlaying = true;
+    visPaused = false;
+    visStopRequested = false;
+    currentNumbersToVis = numbers.slice();
+
+    if (playBtnText) playBtnText.textContent = "Pause";
+    if (playBtnIcon) playBtnIcon.textContent = "⏸";
+
+    drawVisualizerBars(numbers);
+
+    try {
+      await Promise.all([
+        visualizeBubbleSort(numbers),
+        visualizeMergeSort(numbers)
+      ]);
+    } catch(e) {
+      console.error(e);
+    }
+
+    // Reset buttons when animation finished
+    visPlaying = false;
+    visPaused = false;
+    if (playBtnText) playBtnText.textContent = "Play Visualizer";
+    if (playBtnIcon) playBtnIcon.textContent = "▶";
+  } else {
+    // Toggle pause flag
+    visPaused = !visPaused;
+    if (visPaused) {
+      if (playBtnText) playBtnText.textContent = "Resume";
+      if (playBtnIcon) playBtnIcon.textContent = "▶";
+    } else {
+      if (playBtnText) playBtnText.textContent = "Pause";
+      if (playBtnIcon) playBtnIcon.textContent = "⏸";
+    }
+  }
+}
+
+/** Reset the live visualizer to its initial state */
+function resetVisPlayback() {
+  visStopRequested = true;
+  visPaused = false;
+  setTimeout(function() {
+    visStopRequested = false;
+    visPlaying = false;
+
+    var playBtnText = document.getElementById("vis-play-text");
+    var playBtnIcon = document.getElementById("vis-play-icon");
+    if (playBtnText) playBtnText.textContent = "Play Visualizer";
+    if (playBtnIcon) playBtnIcon.textContent = "▶";
+
+    var raw = document.getElementById("sort-input").value;
+    var numbers = parseNumbers(raw);
+    if (numbers.length >= 2 && numbers.length <= 50) {
+      drawVisualizerBars(numbers);
+    }
+
+    var bubbleStats = document.getElementById("bubble-vis-stats");
+    var mergeStats = document.getElementById("merge-vis-stats");
+    if (bubbleStats) bubbleStats.textContent = "Comparisons: 0 | Swaps: 0";
+    if (mergeStats) mergeStats.textContent = "Comparisons: 0 | Writes: 0";
+  }, 100);
 }
 
 /** Step-by-step Bubble Sort visualizer with highlight animations */
@@ -615,6 +709,23 @@ function runSort() {
   setLoading("sort-btn-text", "sort-btn-loader", "sort-run-btn", true);
   document.getElementById("sort-results").classList.add("hidden");
   document.getElementById("sort-chart-container").classList.add("hidden");
+
+  // Auto-run or clear live visualizer based on input size
+  if (numbers.length >= 2 && numbers.length <= 50) {
+    checkAndToggleVisualizer(numbers);
+    resetVisPlayback();
+    setTimeout(function() {
+      toggleVisPlayback();
+    }, 200);
+  } else {
+    var panel = document.getElementById("live-visualizer");
+    if (panel) {
+      panel.classList.remove("active");
+    }
+    visStopRequested = true;
+    visPlaying = false;
+    visPaused = false;
+  }
 
   fetch(API_BASE + "/api/sort", {
     method: "POST",
