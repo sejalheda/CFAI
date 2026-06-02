@@ -133,6 +133,38 @@
           </table>
         </div>
 
+        <!-- Live Sorting Visualizer Widget -->
+        <div id="live-visualizer" class="live-visualizer-panel">
+          <div class="visualizer-header">
+            <h3 class="visualizer-title">Live Sorting Visualizer (Interactive)</h3>
+            <p class="visualizer-subtitle">Visualize comparisons, swaps, and recursion frames in real-time (runs automatically for arrays ≤ 50 elements).</p>
+          </div>
+          
+          <div class="visualizer-playground">
+            <!-- Bubble Sort Live Column -->
+            <div class="visualizer-column">
+              <div class="visualizer-col-header">
+                <span class="badge bubble-badge">Bubble Sort O(n²)</span>
+                <div class="visualizer-stats" id="bubble-vis-stats">Comparisons: 0 | Swaps: 0</div>
+              </div>
+              <div id="bubble-bars-container" class="bars-container">
+                <!-- Bars generated dynamically -->
+              </div>
+            </div>
+
+            <!-- Merge Sort Live Column -->
+            <div class="visualizer-column">
+              <div class="visualizer-col-header">
+                <span class="badge merge-badge">Merge Sort O(n log n)</span>
+                <div class="visualizer-stats" id="merge-vis-stats">Comparisons: 0 | Writes: 0</div>
+              </div>
+              <div id="merge-bars-container" class="bars-container">
+                <!-- Bars generated dynamically -->
+              </div>
+            </div>
+          </div>
+        </div>
+
         <div id="sort-results" class="hidden">
           <div class="results-grid">
             <!-- Bubble Sort Card -->
