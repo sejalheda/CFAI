@@ -861,6 +861,61 @@ code {
   box-shadow: 0 0 8px #10b981;
 }
 
+/* Playback controls styling */
+.visualizer-controls {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+  background: rgba(255, 255, 255, 0.015);
+  border: 1px solid var(--border);
+  padding: 16px 20px;
+  border-radius: var(--radius-md);
+  margin-bottom: 24px;
+}
+
+.btn--vis-control {
+  padding: 8px 18px;
+  font-size: 0.85rem;
+  border-radius: var(--radius-sm);
+}
+
+.vis-speed-group {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-grow: 1;
+  justify-content: flex-end;
+}
+
+.vis-speed-group .range-slider {
+  max-width: 180px;
+}
+
+/* Winner Card Glow Effects */
+.winner-divider {
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.winner-divider::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(251,191,36,0.15) 0%, transparent 60%);
+  animation: rotateGlow 8s linear infinite;
+  pointer-events: none;
+}
+
+@keyframes rotateGlow {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
 /* ─────────────────────────────────────────────────────────
    RESPONSIVE
    ───────────────────────────────────────────────────────── */
