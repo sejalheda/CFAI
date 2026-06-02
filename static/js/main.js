@@ -228,6 +228,178 @@ async function visualizeBubbleSort(arr) {
   }
 }
 
+/** Step-by-step Merge Sort visualizer with recursion and merge highlight animations */
+async function visualizeMergeSort(arr) {
+  var a = arr.slice();
+  var n = a.length;
+  var comparisons = 0;
+  var writes = 0;
+  var statsEl = document.getElementById("merge-vis-stats");
+
+  var max = Math.max.apply(null, arr);
+  var min = Math.min.apply(null, arr);
+  var range = (max - min) || 1;
+
+  async function merge(start, mid, end) {
+    var left = a.slice(start, mid + 1);
+    var right = a.slice(mid + 1, end + 1);
+    var i = 0, j = 0, k = start;
+
+    while (i < left.length && j < right.length) {
+      if (visStopRequested) return;
+
+      var barLeft = document.getElementById("merge-bar-" + (start + i));
+      var barRight = document.getElementById("merge-bar-" + (mid + 1 + j));
+
+      if (barLeft && barRight) {
+        barLeft.classList.add("comparing");
+        barRight.classList.add("comparing");
+      }
+
+      comparisons++;
+      if (statsEl) {
+        statsEl.textContent = "Comparisons: " + comparisons + " | Writes: " + writes;
+      }
+
+      await sleep(visDelayMs);
+      if (visStopRequested) return;
+
+      if (barLeft && barRight) {
+        barLeft.classList.remove("comparing");
+        barRight.classList.remove("comparing");
+      }
+
+      if (left[i] <= right[j]) {
+        a[k] = left[i];
+        i++;
+      } else {
+        a[k] = right[j];
+        j++;
+      }
+
+      var barK = document.getElementById("merge-bar-" + k);
+      if (barK) {
+        barK.classList.add("swapping");
+        var val = a[k];
+        var heightPercent = 10 + ((val - min) / range) * 85;
+        barK.style.height = heightPercent + "%";
+        barK.setAttribute("title", val);
+      }
+
+      writes++;
+      if (statsEl) {
+        statsEl.textContent = "Comparisons: " + comparisons + " | Writes: " + writes;
+      }
+
+      await sleep(visDelayMs);
+      if (visStopRequested) return;
+
+      if (barK) {
+        barK.classList.remove("swapping");
+      }
+
+      k++;
+    }
+
+    while (i < left.length) {
+      if (visStopRequested) return;
+      a[k] = left[i];
+
+      var barK = document.getElementById("merge-bar-" + k);
+      if (barK) {
+        barK.classList.add("swapping");
+        var val = a[k];
+        var heightPercent = 10 + ((val - min) / range) * 85;
+        barK.style.height = heightPercent + "%";
+        barK.setAttribute("title", val);
+      }
+
+      writes++;
+      if (statsEl) {
+        statsEl.textContent = "Comparisons: " + comparisons + " | Writes: " + writes;
+      }
+
+      await sleep(visDelayMs);
+      if (visStopRequested) return;
+
+      if (barK) {
+        barK.classList.remove("swapping");
+      }
+
+      i++;
+      k++;
+    }
+
+    while (j < right.length) {
+      if (visStopRequested) return;
+      a[k] = right[j];
+
+      var barK = document.getElementById("merge-bar-" + k);
+      if (barK) {
+        barK.classList.add("swapping");
+        var val = a[k];
+        var heightPercent = 10 + ((val - min) / range) * 85;
+        barK.style.height = heightPercent + "%";
+        barK.setAttribute("title", val);
+      }
+
+      writes++;
+      if (statsEl) {
+        statsEl.textContent = "Comparisons: " + comparisons + " | Writes: " + writes;
+      }
+
+      await sleep(visDelayMs);
+      if (visStopRequested) return;
+
+      if (barK) {
+        barK.classList.remove("swapping");
+      }
+
+      j++;
+      k++;
+    }
+
+    // Temporarily highlight merged portion as sorted
+    for (var m = start; m <= end; m++) {
+      var barM = document.getElementById("merge-bar-" + m);
+      if (barM) {
+        barM.classList.add("sorted");
+      }
+    }
+
+    await sleep(visDelayMs);
+    if (visStopRequested) return;
+
+    for (var m = start; m <= end; m++) {
+      var barM = document.getElementById("merge-bar-" + m);
+      if (barM && end < n - 1) {
+        barM.classList.remove("sorted");
+      }
+    }
+  }
+
+  async function mergeSortHelper(start, end) {
+    if (start >= end) return;
+    var mid = Math.floor((start + end) / 2);
+    await mergeSortHelper(start, mid);
+    if (visStopRequested) return;
+    await mergeSortHelper(mid + 1, end);
+    if (visStopRequested) return;
+    await merge(start, mid, end);
+  }
+
+  await mergeSortHelper(0, n - 1);
+
+  if (!visStopRequested) {
+    for (var i = 0; i < n; i++) {
+      var bar = document.getElementById("merge-bar-" + i);
+      if (bar) {
+        bar.classList.add("sorted");
+      }
+    }
+  }
+}
+
 /* ─────────────────────────────────────────────────────────
    Quick Fill helpers
 ───────────────────────────────────────────────────────── */
