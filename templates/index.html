@@ -139,6 +139,21 @@
             <h3 class="visualizer-title">Live Sorting Visualizer (Interactive)</h3>
             <p class="visualizer-subtitle">Visualize comparisons, swaps, and recursion frames in real-time (runs automatically for arrays ≤ 50 elements).</p>
           </div>
+
+          <div class="visualizer-controls">
+            <button id="vis-play-btn" class="btn btn--primary btn--vis-control" type="button" onclick="toggleVisPlayback()">
+              <span id="vis-play-icon">▶</span> <span id="vis-play-text">Play Visualizer</span>
+            </button>
+            <button id="vis-reset-btn" class="btn btn--ghost btn--vis-control" type="button" onclick="resetVisPlayback()">
+              <span>🔄</span> Reset
+            </button>
+            
+            <div class="vis-speed-group">
+              <span class="quick-label">Delay:</span>
+              <input type="range" id="vis-delay-slider" min="10" max="1000" step="10" value="150" class="range-slider" oninput="updateVisDelay(this.value)">
+              <span class="slider-value-display" id="vis-delay-val">150ms</span>
+            </div>
+          </div>
           
           <div class="visualizer-playground">
             <!-- Bubble Sort Live Column -->
