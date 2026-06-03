@@ -171,7 +171,16 @@ def api_membership():
             if not isinstance(x, (int, float)):
                 return jsonify({"error": f"Search target at index {idx} is not a valid number."}), 400
         search_targets = targets_input
-    return jsonify({"status": "targets_parsed_passed"})
+    import random
+    if not search_targets:
+        num_targets = min(1000, max(100, len(numbers)))
+        half = num_targets // 2
+        choices = [random.choice(numbers) for _ in range(half)]
+        min_val = min(numbers)
+        max_val = max(numbers)
+        others = [random.randint(int(min_val) - 10, int(max_val) + 10) for _ in range(num_targets - half)]
+        search_targets = choices + others
+    return jsonify({"status": "targets_generated_passed"})
 
 
 if __name__ == "__main__":
