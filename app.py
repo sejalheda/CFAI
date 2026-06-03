@@ -145,6 +145,23 @@ def api_sort():
         "speedup": speedup,
         "input_size": len(numbers)
     })
+def measure_list_membership(numbers_list, targets):
+    """Measures performance of checking membership in a Python list."""
+    t_start = time.perf_counter()
+    found = 0
+    for target in targets:
+        if target in numbers_list:
+            found += 1
+    t_end = time.perf_counter()
+    elapsed_seconds = t_end - t_start
+    elapsed_ms = elapsed_seconds * 1000
+    return {
+        "elapsed_seconds": elapsed_seconds,
+        "elapsed_ms": round(elapsed_ms, 6),
+        "found": found,
+        "description": "Linear Search - O(n)"
+    }
+
 
 @app.route("/api/membership", methods=["POST"])
 def api_membership():
