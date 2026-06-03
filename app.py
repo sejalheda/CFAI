@@ -162,7 +162,16 @@ def api_membership():
         return jsonify({"error": "Please provide at least 2 numbers."}), 400
     if len(numbers) > 100000:
         return jsonify({"error": "Maximum 100,000 numbers allowed."}), 400
-    return jsonify({"status": "size_boundary_check_passed"})
+    search_targets = []
+    if "search_targets" in data:
+        targets_input = data["search_targets"]
+        if not isinstance(targets_input, list):
+            return jsonify({"error": "'search_targets' must be a list of numbers."}), 400
+        for idx, x in enumerate(targets_input):
+            if not isinstance(x, (int, float)):
+                return jsonify({"error": f"Search target at index {idx} is not a valid number."}), 400
+        search_targets = targets_input
+    return jsonify({"status": "targets_parsed_passed"})
 
 
 if __name__ == "__main__":
