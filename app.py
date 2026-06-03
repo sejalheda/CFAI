@@ -149,7 +149,10 @@ def api_sort():
 @app.route("/api/membership", methods=["POST"])
 def api_membership():
     """API Endpoint to compare List and Set membership performance."""
-    return jsonify({"status": "skeleton"})
+    data = request.get_json(silent=True)
+    if not data or "numbers" not in data:
+        return jsonify({"error": "Invalid request. 'numbers' is required."}), 400
+    return jsonify({"status": "payload_check_passed"})
 
 
 if __name__ == "__main__":
