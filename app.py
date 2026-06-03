@@ -146,6 +146,11 @@ def api_sort():
         "input_size": len(numbers)
     })
 
+@app.route("/api/membership", methods=["POST"])
+def api_membership():
+    """API Endpoint to compare List and Set membership performance."""
+    return jsonify({"status": "skeleton"})
+
 
 if __name__ == "__main__":
     app.run(debug=True, port=5000)
