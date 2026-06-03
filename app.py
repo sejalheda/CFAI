@@ -218,11 +218,13 @@ def api_membership():
     unique_elements = len(set(numbers))
     duplicate_elements = len(numbers) - unique_elements
     list_membership = measure_list_membership(numbers, search_targets)
+    set_membership = measure_set_membership(numbers, search_targets)
     return jsonify({
-        "status": "list_membership_measured_passed",
+        "status": "set_membership_measured_passed",
         "unique_elements": unique_elements,
         "duplicate_elements": duplicate_elements,
-        "list_membership": list_membership
+        "list_membership": list_membership,
+        "set_membership": set_membership
     })
 
 
