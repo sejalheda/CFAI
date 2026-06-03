@@ -180,7 +180,13 @@ def api_membership():
         max_val = max(numbers)
         others = [random.randint(int(min_val) - 10, int(max_val) + 10) for _ in range(num_targets - half)]
         search_targets = choices + others
-    return jsonify({"status": "targets_generated_passed"})
+    unique_elements = len(set(numbers))
+    duplicate_elements = len(numbers) - unique_elements
+    return jsonify({
+        "status": "metadata_calculated_passed",
+        "unique_elements": unique_elements,
+        "duplicate_elements": duplicate_elements
+    })
 
 
 if __name__ == "__main__":
