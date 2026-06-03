@@ -158,7 +158,11 @@ def api_membership():
     for idx, x in enumerate(numbers):
         if not isinstance(x, (int, float)):
             return jsonify({"error": f"Item at index {idx} is not a valid number."}), 400
-    return jsonify({"status": "data_type_check_passed"})
+    if len(numbers) < 2:
+        return jsonify({"error": "Please provide at least 2 numbers."}), 400
+    if len(numbers) > 100000:
+        return jsonify({"error": "Maximum 100,000 numbers allowed."}), 400
+    return jsonify({"status": "size_boundary_check_passed"})
 
 
 if __name__ == "__main__":
