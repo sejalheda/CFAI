@@ -183,7 +183,20 @@ def measure_set_membership(numbers_list, targets):
 
 @app.route("/api/membership", methods=["POST"])
 def api_membership():
-    """API Endpoint to compare List and Set membership performance."""
+    """API Endpoint to compare Python List (O(n)) and Set (O(1)) membership search performance.
+
+    Accepts POST request with JSON payload:
+    {
+        "numbers": [list of base elements],
+        "search_targets": [optional list of values to search for]
+    }
+
+    If search_targets is omitted, they are automatically generated from a blend of
+    present elements and out-of-bounds random values.
+
+    Returns JSON response containing timing and success metrics for both List and Set lookups,
+    metadata regarding input size/uniqueness, and speedup winner metrics.
+    """
     data = request.get_json(silent=True)
     if not data or "numbers" not in data:
         return jsonify({"error": "Invalid request. 'numbers' is required."}), 400
