@@ -162,6 +162,24 @@ def measure_list_membership(numbers_list, targets):
         "description": "Linear Search - O(n)"
     }
 
+def measure_set_membership(numbers_list, targets):
+    """Measures performance of checking membership in a Python set."""
+    numbers_set = set(numbers_list)
+    t_start = time.perf_counter()
+    found = 0
+    for target in targets:
+        if target in numbers_set:
+            found += 1
+    t_end = time.perf_counter()
+    elapsed_seconds = t_end - t_start
+    elapsed_ms = elapsed_seconds * 1000
+    return {
+        "elapsed_seconds": elapsed_seconds,
+        "elapsed_ms": round(elapsed_ms, 6),
+        "found": found,
+        "description": "Hash Table - O(1)"
+    }
+
 
 @app.route("/api/membership", methods=["POST"])
 def api_membership():
