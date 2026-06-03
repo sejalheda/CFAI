@@ -228,13 +228,14 @@ def api_membership():
         winner = "Set Membership"
         speedup = round(t_list / t_set, 2) if t_set > 0 else 1.0
     return jsonify({
-        "status": "winner_calculated_passed",
-        "unique_elements": unique_elements,
-        "duplicate_elements": duplicate_elements,
         "list_membership": list_membership,
         "set_membership": set_membership,
         "winner": winner,
-        "speedup": speedup
+        "speedup": speedup,
+        "input_size": len(numbers),
+        "unique_elements": unique_elements,
+        "duplicate_elements": duplicate_elements,
+        "targets_searched": len(search_targets)
     })
 
 
