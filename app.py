@@ -152,7 +152,13 @@ def api_membership():
     data = request.get_json(silent=True)
     if not data or "numbers" not in data:
         return jsonify({"error": "Invalid request. 'numbers' is required."}), 400
-    return jsonify({"status": "payload_check_passed"})
+    numbers = data["numbers"]
+    if not isinstance(numbers, list):
+        return jsonify({"error": "'numbers' must be a list of numbers."}), 400
+    for idx, x in enumerate(numbers):
+        if not isinstance(x, (int, float)):
+            return jsonify({"error": f"Item at index {idx} is not a valid number."}), 400
+    return jsonify({"status": "data_type_check_passed"})
 
 
 if __name__ == "__main__":
