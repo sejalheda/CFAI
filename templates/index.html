@@ -299,6 +299,40 @@
           </table>
         </div>
 
+        <!-- Live Membership Visualizer Widget -->
+        <div id="live-membership-visualizer" class="live-visualizer-panel">
+          <div class="visualizer-header">
+            <h3 class="visualizer-title">Live Membership Visualizer (Interactive)</h3>
+            <p class="visualizer-subtitle">Visualize sequential scan O(n) vs direct hash lookup O(1) in real-time (runs automatically for arrays ≤ 30 elements).</p>
+          </div>
+
+          <!-- Controls will go here -->
+          
+          <div class="visualizer-playground">
+            <!-- List Search Column -->
+            <div class="visualizer-column">
+              <div class="visualizer-col-header">
+                <span class="badge list-badge" style="background: rgba(251,146,60,0.12); color: var(--list); border: 1px solid rgba(251,146,60,0.3);">List (Linear Search) O(n)</span>
+                <div class="visualizer-stats" id="list-vis-stats">Comparisons: 0 | Target: -</div>
+              </div>
+              <div id="list-nodes-container" class="nodes-container">
+                <!-- Nodes generated dynamically -->
+              </div>
+            </div>
+
+            <!-- Set Search Column -->
+            <div class="visualizer-column">
+              <div class="visualizer-col-header">
+                <span class="badge set-badge">Set (Hash Lookup) O(1)</span>
+                <div class="visualizer-stats" id="set-vis-stats">Steps: 0 | Target: -</div>
+              </div>
+              <div id="set-buckets-container" class="buckets-container">
+                <!-- Buckets generated dynamically -->
+              </div>
+            </div>
+          </div>
+        </div>
+
         <div id="set-results" class="hidden">
           <div class="results-grid">
             <!-- List Card -->
