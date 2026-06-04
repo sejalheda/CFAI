@@ -932,3 +932,124 @@ function drawMemVisualizer(numbers, target) {
   if (listStats) listStats.textContent = "Comparisons: 0 | Target: " + targetStr;
   if (setStats)  setStats.textContent  = "Steps: 0 | Target: " + targetStr;
 }
+
+/** Toggles the visibility of the membership visualizer based on array length */
+function checkAndToggleMemVisualizer(numbers, target) {
+  var panel = document.getElementById("live-membership-visualizer");
+  if (!panel) return false;
+  
+  if (numbers.length >= 2 && numbers.length <= 30) {
+    panel.classList.add("active");
+    drawMemVisualizer(numbers, target);
+    return true;
+  } else {
+    panel.classList.remove("active");
+    return false;
+  }
+}
+
+/** Update visualizer animation delay dynamically */
+function updateMemVisDelay(val) {
+  memVisDelayMs = parseInt(val) || 300;
+  var display = document.getElementById("mem-vis-delay-val");
+  if (display) {
+    display.textContent = val + "ms";
+  }
+}
+
+/** Toggle play/pause state for visualizer */
+async function toggleMemVisPlayback() {
+  var playBtnText = document.getElementById("mem-vis-play-text");
+  var playBtnIcon = document.getElementById("mem-vis-play-icon");
+
+  if (!memVisPlaying) {
+    var raw = document.getElementById("set-input").value;
+    var numbers = parseNumbers(raw);
+    var rawTgt = document.getElementById("set-target-input").value;
+    var targets = parseNumbers(rawTgt);
+
+    if (numbers.length < 2 || numbers.length > 30) {
+      showError("set-error", "Please enter between 2 and 30 numbers to run the live visualizer.");
+      return;
+    }
+
+    var target;
+    if (targets.length > 0) {
+      target = targets[0];
+    } else {
+      if (Math.random() < 0.7 && numbers.length > 0) {
+        target = numbers[Math.floor(Math.random() * numbers.length)];
+      } else {
+        var minVal = Math.min.apply(null, numbers);
+        var maxVal = Math.max.apply(null, numbers);
+        target = Math.floor(minVal + Math.random() * (maxVal - minVal + 10)) + 5;
+        while (numbers.indexOf(target) !== -1) {
+          target += 1;
+        }
+      }
+    }
+
+    memVisPlaying = true;
+    memVisPaused = false;
+    memVisStopRequested = false;
+
+    if (playBtnText) playBtnText.textContent = "Pause";
+    if (playBtnIcon) playBtnIcon.textContent = "⏸";
+
+    drawMemVisualizer(numbers, target);
+
+    try {
+      await Promise.all([
+        visualizeListSearch(numbers, target),
+        visualizeSetSearch(numbers, target)
+      ]);
+    } catch(e) {
+      console.error(e);
+    }
+
+    memVisPlaying = false;
+    memVisPaused = false;
+    if (playBtnText) playBtnText.textContent = "Play Visualizer";
+    if (playBtnIcon) playBtnIcon.textContent = "▶";
+  } else {
+    memVisPaused = !memVisPaused;
+    if (memVisPaused) {
+      if (playBtnText) playBtnText.textContent = "Resume";
+      if (playBtnIcon) playBtnIcon.textContent = "▶";
+    } else {
+      if (playBtnText) playBtnText.textContent = "Pause";
+      if (playBtnIcon) playBtnIcon.textContent = "⏸";
+    }
+  }
+}
+
+/** Reset the live visualizer to its initial state */
+function resetMemVisPlayback() {
+  memVisStopRequested = true;
+  memVisPaused = false;
+  setTimeout(function() {
+    memVisStopRequested = false;
+    memVisPlaying = false;
+
+    var playBtnText = document.getElementById("mem-vis-play-text");
+    var playBtnIcon = document.getElementById("mem-vis-play-icon");
+    if (playBtnText) playBtnText.textContent = "Play Visualizer";
+    if (playBtnIcon) playBtnIcon.textContent = "▶";
+
+    var raw = document.getElementById("set-input").value;
+    var numbers = parseNumbers(raw);
+    var rawTgt = document.getElementById("set-target-input").value;
+    var targets = parseNumbers(rawTgt);
+    var target = targets.length > 0 ? targets[0] : null;
+
+    if (numbers.length >= 2 && numbers.length <= 30) {
+      drawMemVisualizer(numbers, target);
+    }
+
+    var listStats = document.getElementById("list-vis-stats");
+    var setStats = document.getElementById("set-vis-stats");
+    var targetStr = target !== null ? target : "-";
+    if (listStats) listStats.textContent = "Comparisons: 0 | Target: " + targetStr;
+    if (setStats)  setStats.textContent  = "Steps: 0 | Target: " + targetStr;
+  }, 100);
+}
