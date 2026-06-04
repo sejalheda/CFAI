@@ -264,6 +264,41 @@
           <div id="set-error" class="error-box hidden" aria-live="polite"></div>
         </div>
 
+        <!-- Complexity Reference Table -->
+        <div class="complexity-table-wrapper">
+          <h3 class="table-title">Theoretical Complexity Reference</h3>
+          <table class="complexity-table">
+            <thead>
+              <tr>
+                <th>Data Structure</th>
+                <th>Lookup (Average)</th>
+                <th>Lookup (Worst)</th>
+                <th>Insertion (Average)</th>
+                <th>Space Complexity</th>
+                <th>Duplicates Allowed</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="algo-td list-color">List (Array-based)</td>
+                <td><code>O(n)</code></td>
+                <td><code>O(n)</code></td>
+                <td><code>O(1)</code> (amortized append)</td>
+                <td><code>O(n)</code></td>
+                <td><span class="badge badge--success">Yes</span></td>
+              </tr>
+              <tr>
+                <td class="algo-td set-color">Set (Hash Table-based)</td>
+                <td><code>O(1)</code></td>
+                <td><code>O(n)</code> (collision)</td>
+                <td><code>O(1)</code></td>
+                <td><code>O(n)</code></td>
+                <td><span class="badge badge--danger" style="background: rgba(248,113,113,0.12); color: var(--bubble); border: 1px solid rgba(248,113,113,0.3);">No</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
         <div id="set-results" class="hidden">
           <div class="results-grid">
             <!-- List Card -->
