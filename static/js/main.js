@@ -805,6 +805,24 @@ function runSet() {
   var payload = { numbers: numbers };
   if (targets.length > 0) { payload.search_targets = targets; }
 
+  // Auto-run or clear live visualizer based on input size
+  if (numbers.length >= 2 && numbers.length <= 30) {
+    var target = targets.length > 0 ? targets[0] : null;
+    checkAndToggleMemVisualizer(numbers, target);
+    resetMemVisPlayback();
+    setTimeout(function() {
+      toggleMemVisPlayback();
+    }, 200);
+  } else {
+    var panel = document.getElementById("live-membership-visualizer");
+    if (panel) {
+      panel.classList.remove("active");
+    }
+    memVisStopRequested = true;
+    memVisPlaying = false;
+    memVisPaused = false;
+  }
+
   fetch(API_BASE + "/api/membership", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -1106,5 +1124,78 @@ async function visualizeListSearch(numbers, target) {
 
   if (statsEl) {
     statsEl.textContent = "Comparisons: " + comparisons + " | Target: " + target + " (NOT FOUND)";
+  }
+}
+
+/** Step-by-step set lookup (hash table bucket check) visualizer */
+async function visualizeSetSearch(numbers, target) {
+  var statsEl = document.getElementById("set-vis-stats");
+  var steps = 0;
+
+  if (memVisStopRequested) return;
+
+  // Step 1: Calculate hash and highlight the targeted bucket row
+  var bIdx = Math.floor(Math.abs(target) % 8);
+  var row = document.getElementById("bucket-row-" + bIdx);
+  if (row) {
+    row.classList.add("hashed");
+  }
+
+  steps++;
+  if (statsEl) {
+    statsEl.textContent = "Steps: " + steps + " | Target: " + target + " (Hashed to B[" + bIdx + "])";
+  }
+
+  await memSleep(memVisDelayMs * 1.5); // Give extra time to see the hashing step
+  if (memVisStopRequested) return;
+
+  // Step 2: Search elements inside the bucket sequentially
+  var buckets = [[], [], [], [], [], [], [], []];
+  numbers.forEach(function(val) {
+    var h = Math.floor(Math.abs(val) % 8);
+    buckets[h].push(val);
+  });
+
+  var targetBucketItems = buckets[bIdx];
+  var found = false;
+
+  for (var j = 0; j < targetBucketItems.length; j++) {
+    if (memVisStopRequested) return;
+
+    var itemNode = document.getElementById("set-node-" + bIdx + "-" + j);
+    if (itemNode) {
+      itemNode.classList.add("comparing");
+    }
+
+    steps++;
+    if (statsEl) {
+      statsEl.textContent = "Steps: " + steps + " | Target: " + target + " (Checking B[" + bIdx + "] index " + j + ")";
+    }
+
+    await memSleep(memVisDelayMs);
+    if (memVisStopRequested) return;
+
+    if (targetBucketItems[j] === target) {
+      if (itemNode) {
+        itemNode.classList.remove("comparing");
+        itemNode.classList.add("match");
+      }
+      found = true;
+      if (statsEl) {
+        statsEl.textContent = "Steps: " + steps + " | Target: " + target + " (FOUND in B[" + bIdx + "]!)";
+      }
+      break;
+    } else {
+      if (itemNode) {
+        itemNode.classList.remove("comparing");
+        itemNode.classList.add("mismatch");
+      }
+    }
+  }
+
+  if (!found) {
+    if (statsEl) {
+      statsEl.textContent = "Steps: " + steps + " | Target: " + target + " (NOT FOUND in B[" + bIdx + "])";
+    }
   }
 }

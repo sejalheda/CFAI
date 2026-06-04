@@ -57,7 +57,7 @@ CFAI/
 | Day 3 | Frontend base – HTML + CSS | ✅ Done |
 | Day 4 | Sorting comparison UI + JS | ✅ Done |
 | Day 5 | Flask backend – List vs Set | ✅ Done |
-| Day 6 | Data structure comparison UI | ⏳ Pending |
+| Day 6 | Data structure comparison UI | ✅ Done |
 | Day 7 | Chart.js visualizations | ⏳ Pending |
 | Day 8 | UI polish, animations, responsive | ⏳ Pending |
 | Day 9 | Testing & bug fixes | ⏳ Pending |
