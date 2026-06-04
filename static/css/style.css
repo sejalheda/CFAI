@@ -965,3 +965,72 @@ code {
   gap: 4px;
   overflow-y: auto;
 }
+
+.list-node {
+  background: var(--bg-card-2);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-sm);
+  color: var(--text-primary);
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  font-weight: 600;
+  padding: 6px 12px;
+  min-width: 40px;
+  text-align: center;
+  transition: all var(--transition);
+}
+
+.bucket-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 4px 8px;
+  border-radius: 4px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.02);
+  transition: all var(--transition);
+}
+
+.bucket-row.hashed {
+  background: rgba(129, 140, 248, 0.1);
+  border-bottom-color: rgba(129, 140, 248, 0.2);
+}
+
+.bucket-label {
+  width: 70px;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.bucket-row.hashed .bucket-label {
+  color: var(--set);
+}
+
+.bucket-items {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 6px;
+  overflow-x: auto;
+}
+
+/* Membership Animation Highlights */
+.list-node.comparing {
+  background-color: var(--gold);
+  border-color: var(--gold);
+  color: #000;
+  box-shadow: 0 0 8px var(--gold);
+}
+
+.list-node.match {
+  background-color: var(--merge);
+  border-color: var(--merge);
+  color: #000;
+  box-shadow: 0 0 10px var(--merge);
+}
+
+.list-node.mismatch {
+  background-color: rgba(248, 113, 113, 0.05);
+  border-color: rgba(248, 113, 113, 0.15);
+  color: var(--text-muted);
+}
