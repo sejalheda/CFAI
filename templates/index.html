@@ -306,7 +306,20 @@
             <p class="visualizer-subtitle">Visualize sequential scan O(n) vs direct hash lookup O(1) in real-time (runs automatically for arrays ≤ 30 elements).</p>
           </div>
 
-          <!-- Controls will go here -->
+          <div class="visualizer-controls">
+            <button id="mem-vis-play-btn" class="btn btn--primary btn--vis-control" type="button" onclick="toggleMemVisPlayback()">
+              <span id="mem-vis-play-icon">▶</span> <span id="mem-vis-play-text">Play Visualizer</span>
+            </button>
+            <button id="mem-vis-reset-btn" class="btn btn--ghost btn--vis-control" type="button" onclick="resetMemVisPlayback()">
+              <span>🔄</span> Reset
+            </button>
+            
+            <div class="vis-speed-group">
+              <span class="quick-label">Delay:</span>
+              <input type="range" id="mem-vis-delay-slider" min="50" max="1500" step="50" value="300" class="range-slider" oninput="updateMemVisDelay(this.value)">
+              <span class="slider-value-display" id="mem-vis-delay-val">300ms</span>
+            </div>
+          </div>
           
           <div class="visualizer-playground">
             <!-- List Search Column -->
