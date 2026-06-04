@@ -1053,3 +1053,58 @@ function resetMemVisPlayback() {
     if (setStats)  setStats.textContent  = "Steps: 0 | Target: " + targetStr;
   }, 100);
 }
+
+/** A helper promise delay function for membership visualizer */
+async function memSleep(ms) {
+  await new Promise(function(resolve) {
+    setTimeout(resolve, ms);
+  });
+  while (memVisPaused && !memVisStopRequested) {
+    await new Promise(function(resolve) {
+      setTimeout(resolve, 50);
+    });
+  }
+}
+
+/** Step-by-step sequential search visualizer with highlight animations */
+async function visualizeListSearch(numbers, target) {
+  var statsEl = document.getElementById("list-vis-stats");
+  var comparisons = 0;
+  
+  for (var i = 0; i < numbers.length; i++) {
+    if (memVisStopRequested) return;
+
+    var node = document.getElementById("list-node-" + i);
+    if (node) {
+      node.classList.add("comparing");
+    }
+
+    comparisons++;
+    if (statsEl) {
+      statsEl.textContent = "Comparisons: " + comparisons + " | Target: " + target;
+    }
+
+    await memSleep(memVisDelayMs);
+    if (memVisStopRequested) return;
+
+    if (numbers[i] === target) {
+      if (node) {
+        node.classList.remove("comparing");
+        node.classList.add("match");
+      }
+      if (statsEl) {
+        statsEl.textContent = "Comparisons: " + comparisons + " | Target: " + target + " (FOUND!)";
+      }
+      return;
+    } else {
+      if (node) {
+        node.classList.remove("comparing");
+        node.classList.add("mismatch");
+      }
+    }
+  }
+
+  if (statsEl) {
+    statsEl.textContent = "Comparisons: " + comparisons + " | Target: " + target + " (NOT FOUND)";
+  }
+}
