@@ -860,3 +860,75 @@ function runSet() {
     console.error(err);
   });
 }
+
+/* ─────────────────────────────────────────────────────────
+   MODULE 2 — List vs Set Membership Live Visualizer
+   ───────────────────────────────────────────────────────── */
+var memVisPlaying = false;
+var memVisStopRequested = false;
+var memVisPaused = false;
+var memVisDelayMs = 300;
+
+var memVisListNumbers = [];
+var memVisSearchTargets = [];
+var memVisCurrentTargetIndex = 0;
+
+/** Draw list nodes and hash buckets dynamically */
+function drawMemVisualizer(numbers, target) {
+  var listContainer = document.getElementById("list-nodes-container");
+  var setContainer  = document.getElementById("set-buckets-container");
+  if (!listContainer || !setContainer) return;
+
+  listContainer.innerHTML = "";
+  setContainer.innerHTML = "";
+
+  // 1. Draw List nodes
+  numbers.forEach(function(val, idx) {
+    var node = document.createElement("div");
+    node.className = "list-node";
+    node.id = "list-node-" + idx;
+    node.textContent = val;
+    node.setAttribute("title", "Index: " + idx + ", Value: " + val);
+    listContainer.appendChild(node);
+  });
+
+  // 2. Hash elements into 8 buckets (0 to 7)
+  var buckets = [[], [], [], [], [], [], [], []];
+  numbers.forEach(function(val) {
+    var bIdx = Math.floor(Math.abs(val) % 8);
+    buckets[bIdx].push(val);
+  });
+
+  // 3. Draw Set buckets
+  for (var i = 0; i < 8; i++) {
+    var row = document.createElement("div");
+    row.className = "bucket-row";
+    row.id = "bucket-row-" + i;
+
+    var label = document.createElement("div");
+    label.className = "bucket-label";
+    label.textContent = "B[" + i + "]:";
+    row.appendChild(label);
+
+    var itemsCont = document.createElement("div");
+    itemsCont.className = "bucket-items";
+
+    buckets[i].forEach(function(val, idx) {
+      var itemNode = document.createElement("div");
+      itemNode.className = "list-node";
+      itemNode.id = "set-node-" + i + "-" + idx;
+      itemNode.textContent = val;
+      itemsCont.appendChild(itemNode);
+    });
+
+    row.appendChild(itemsCont);
+    setContainer.appendChild(row);
+  }
+  
+  // Update stats labels
+  var listStats = document.getElementById("list-vis-stats");
+  var setStats  = document.getElementById("set-vis-stats");
+  var targetStr = (target !== null && target !== undefined) ? target : "-";
+  if (listStats) listStats.textContent = "Comparisons: 0 | Target: " + targetStr;
+  if (setStats)  setStats.textContent  = "Steps: 0 | Target: " + targetStr;
+}
