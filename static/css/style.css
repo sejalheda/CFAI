@@ -736,6 +736,12 @@ code {
   border: 1px solid rgba(52, 211, 153, 0.3);
 }
 
+.badge--danger {
+  background: rgba(248, 113, 113, 0.12);
+  color: var(--bubble);
+  border: 1px solid rgba(248, 113, 113, 0.3);
+}
+
 /* Live Sorting Visualizer styling */
 .live-visualizer-panel {
   background: var(--bg-card);
