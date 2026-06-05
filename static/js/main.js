@@ -591,6 +591,35 @@ function fillSet(n) {
 var sortChartInstance = null;
 var setChartInstance  = null;
 
+var sortHistoryData = [];
+var setHistoryData = [];
+var sortHistoryChartInstance = null;
+var setHistoryChartInstance = null;
+
+function clearSortHistory() {
+  sortHistoryData = [];
+  if (sortHistoryChartInstance) {
+    sortHistoryChartInstance.destroy();
+    sortHistoryChartInstance = null;
+  }
+  var container = document.getElementById("sort-history-container");
+  if (container) {
+    container.classList.add("hidden");
+  }
+}
+
+function clearSetHistory() {
+  setHistoryData = [];
+  if (setHistoryChartInstance) {
+    setHistoryChartInstance.destroy();
+    setHistoryChartInstance = null;
+  }
+  var container = document.getElementById("set-history-container");
+  if (container) {
+    container.classList.add("hidden");
+  }
+}
+
 var sortChartLogScale = false;
 var lastBubbleMs = 0;
 var lastMergeMs = 0;
@@ -867,6 +896,20 @@ function runSort() {
 
     // ── Chart ─────────────────────────────────────────
     renderSortChart(b.elapsed_ms, m.elapsed_ms);
+
+    // ── History Tracking ──────────────────────────────
+    var inputSize = data.input_size;
+    var existingIdx = sortHistoryData.findIndex(function(d) { return d.size === inputSize; });
+    if (existingIdx !== -1) {
+      sortHistoryData[existingIdx] = { size: inputSize, bubbleMs: b.elapsed_ms, mergeMs: m.elapsed_ms };
+    } else {
+      sortHistoryData.push({ size: inputSize, bubbleMs: b.elapsed_ms, mergeMs: m.elapsed_ms });
+    }
+    sortHistoryData.sort(function(x, y) { return x.size - y.size; });
+
+    if (typeof renderSortHistoryChart === "function") {
+      renderSortHistoryChart();
+    }
   })
   .catch(function(err) {
     setLoading("sort-btn-text", "sort-btn-loader", "sort-run-btn", false);
@@ -965,6 +1008,20 @@ function runSet() {
 
     // ── Chart ─────────────────────────────────────────
     renderSetChart(l.elapsed_ms, s.elapsed_ms);
+
+    // ── History Tracking ──────────────────────────────
+    var inputSize = data.input_size;
+    var existingIdx = setHistoryData.findIndex(function(d) { return d.size === inputSize; });
+    if (existingIdx !== -1) {
+      setHistoryData[existingIdx] = { size: inputSize, listMs: l.elapsed_ms, setMs: s.elapsed_ms };
+    } else {
+      setHistoryData.push({ size: inputSize, listMs: l.elapsed_ms, setMs: s.elapsed_ms });
+    }
+    setHistoryData.sort(function(x, y) { return x.size - y.size; });
+
+    if (typeof renderSetHistoryChart === "function") {
+      renderSetHistoryChart();
+    }
   })
   .catch(function(err) {
     setLoading("set-btn-text", "set-btn-loader", "set-run-btn", false);
