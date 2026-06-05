@@ -630,6 +630,9 @@ function toggleSortLogScale() {
     sortChartLogScale = chk.checked;
   }
   renderSortChart();
+  if (sortHistoryData.length > 0) {
+    renderSortHistoryChart();
+  }
 }
 
 function renderSortChart(bubbleMs, mergeMs) {
@@ -708,6 +711,106 @@ function renderSortChart(bubbleMs, mergeMs) {
         x: {
           ticks: { color: "#8b93a9" },
           grid:  { color: "rgba(255,255,255,0.05)" }
+        },
+        y: yScales
+      }
+    }
+  });
+}
+
+function renderSortHistoryChart() {
+  var container = document.getElementById("sort-history-container");
+  if (!container || sortHistoryData.length === 0) return;
+  container.classList.remove("hidden");
+
+  if (sortHistoryChartInstance) {
+    sortHistoryChartInstance.destroy();
+    sortHistoryChartInstance = null;
+  }
+
+  var ctx = document.getElementById("sort-history-chart");
+  if (!ctx) return;
+  var ctx2d = ctx.getContext("2d");
+
+  var labels = sortHistoryData.map(function(d) { return "N=" + d.size; });
+  var bubblePoints = sortHistoryData.map(function(d) {
+    return sortChartLogScale ? Math.max(0.0001, d.bubbleMs) : d.bubbleMs;
+  });
+  var mergePoints = sortHistoryData.map(function(d) {
+    return sortChartLogScale ? Math.max(0.0001, d.mergeMs) : d.mergeMs;
+  });
+
+  var yScales = {};
+  if (sortChartLogScale) {
+    yScales = {
+      type: "logarithmic",
+      ticks: {
+        color: "#8b93a9",
+        callback: function(value) {
+          return value.toLocaleString() + " ms";
+        }
+      },
+      grid: { color: "rgba(255,255,255,0.05)" }
+    };
+  } else {
+    yScales = {
+      type: "linear",
+      beginAtZero: true,
+      ticks: { color: "#8b93a9" },
+      grid: { color: "rgba(255,255,255,0.05)" }
+    };
+  }
+
+  sortHistoryChartInstance = new Chart(ctx2d, {
+    type: "line",
+    data: {
+      labels: labels,
+      datasets: [
+        {
+          label: "Bubble Sort (O(n²))",
+          data: bubblePoints,
+          borderColor: "rgba(248,113,113,1)",
+          backgroundColor: "rgba(248,113,113,0.1)",
+          borderWidth: 3,
+          tension: 0.15,
+          fill: true,
+          pointBackgroundColor: "rgba(248,113,113,1)",
+          pointRadius: 4
+        },
+        {
+          label: "Merge Sort (O(n log n))",
+          data: mergePoints,
+          borderColor: "rgba(52,211,153,1)",
+          backgroundColor: "rgba(52,211,153,0.1)",
+          borderWidth: 3,
+          tension: 0.15,
+          fill: true,
+          pointBackgroundColor: "rgba(52,211,153,1)",
+          pointRadius: 4
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: {
+          display: true,
+          labels: { color: "#8b93a9" }
+        },
+        tooltip: {
+          callbacks: {
+            label: function(context) {
+              var idx = context.dataIndex;
+              var originalVal = context.datasetIndex === 0 ? sortHistoryData[idx].bubbleMs : sortHistoryData[idx].mergeMs;
+              return " " + context.dataset.label.split(" (")[0] + ": " + originalVal.toFixed(4) + " ms";
+            }
+          }
+        }
+      },
+      scales: {
+        x: {
+          ticks: { color: "#8b93a9" },
+          grid: { color: "rgba(255,255,255,0.05)" }
         },
         y: yScales
       }
