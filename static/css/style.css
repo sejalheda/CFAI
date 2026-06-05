@@ -640,6 +640,30 @@ code {
   transform: translateY(1px);
 }
 
+.btn-chart-export {
+  background: rgba(16, 185, 129, 0.1);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  color: #34d399;
+  padding: 4px 12px;
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  font-weight: 600;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all var(--transition);
+  outline: none;
+}
+
+.btn-chart-export:hover {
+  background: rgba(16, 185, 129, 0.2);
+  border-color: rgba(16, 185, 129, 0.5);
+  color: #10b981;
+}
+
+.btn-chart-export:active {
+  transform: translateY(1px);
+}
+
 /* ─────────────────────────────────────────────────────────
    ERROR BOX
 ───────────────────────────────────────────────────────── */

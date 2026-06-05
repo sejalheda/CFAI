@@ -1016,6 +1016,33 @@ function renderSetHistoryChart() {
   });
 }
 
+function exportChart(canvasId, filename) {
+  var canvas = document.getElementById(canvasId);
+  if (!canvas) return;
+  var link = document.createElement("a");
+  link.download = filename || "chart.png";
+  link.href = canvas.toDataURL("image/png");
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+}
+
+function exportSortChart() {
+  exportChart("sort-chart", "sorting_comparison.png");
+}
+
+function exportSetChart() {
+  exportChart("set-chart", "membership_comparison.png");
+}
+
+function exportSortHistoryChart() {
+  exportChart("sort-history-chart", "sorting_history.png");
+}
+
+function exportSetHistoryChart() {
+  exportChart("set-history-chart", "membership_history.png");
+}
+
 
 /* ─────────────────────────────────────────────────────────
    MODULE 1 — Sorting Comparison
