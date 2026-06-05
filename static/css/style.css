@@ -616,6 +616,30 @@ code {
   height: 100%;
 }
 
+.btn-history-clear {
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  color: #f87171;
+  padding: 4px 12px;
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  font-weight: 600;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all var(--transition);
+  outline: none;
+}
+
+.btn-history-clear:hover {
+  background: rgba(239, 68, 68, 0.2);
+  border-color: rgba(239, 68, 68, 0.5);
+  color: #ef4444;
+}
+
+.btn-history-clear:active {
+  transform: translateY(1px);
+}
+
 /* ─────────────────────────────────────────────────────────
    ERROR BOX
 ───────────────────────────────────────────────────────── */
