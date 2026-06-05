@@ -220,8 +220,19 @@
 
           <!-- Chart Container -->
           <div id="sort-chart-container" class="chart-container hidden">
-            <h3 class="chart-title">Execution Time Comparison</h3>
-            <canvas id="sort-chart"></canvas>
+            <div class="chart-header">
+              <h3 class="chart-title">Execution Time Comparison</h3>
+              <div class="chart-controls">
+                <label class="toggle-container">
+                  <input type="checkbox" id="sort-log-scale-chk" onchange="toggleSortLogScale()">
+                  <span class="toggle-slider"></span>
+                  <span class="toggle-label">Logarithmic Scale</span>
+                </label>
+              </div>
+            </div>
+            <div class="canvas-wrapper">
+              <canvas id="sort-chart"></canvas>
+            </div>
           </div>
         </div>
       </div>
