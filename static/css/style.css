@@ -531,14 +531,89 @@ code {
   animation: fadeSlideUp .5s ease both;
 }
 
+.chart-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid var(--border-light);
+  padding-bottom: 12px;
+}
+
 .chart-title {
   font-size: .95rem;
   font-weight: 700;
   color: var(--text-secondary);
-  margin-bottom: 20px;
-  text-align: center;
   text-transform: uppercase;
   letter-spacing: .5px;
+  margin: 0;
+}
+
+.chart-controls {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+/* Custom Toggle Switch Styling */
+.toggle-container {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.toggle-container input {
+  display: none;
+}
+
+.toggle-slider {
+  position: relative;
+  width: 34px;
+  height: 18px;
+  background-color: var(--border-light);
+  border-radius: 99px;
+  transition: background-color 0.2s ease;
+}
+
+.toggle-slider::before {
+  content: "";
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  left: 2px;
+  bottom: 2px;
+  background-color: #fff;
+  border-radius: 50%;
+  transition: transform 0.2s ease;
+}
+
+.toggle-container input:checked + .toggle-slider {
+  background-color: var(--set);
+}
+
+.toggle-container input:checked + .toggle-slider::before {
+  transform: translateX(16px);
+}
+
+.toggle-label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  transition: color 0.2s ease;
+}
+
+.toggle-container:hover .toggle-label {
+  color: var(--text-primary);
+}
+
+.canvas-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
 }
 
 /* ─────────────────────────────────────────────────────────
