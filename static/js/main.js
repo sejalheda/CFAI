@@ -828,6 +828,9 @@ function toggleSetLogScale() {
     setChartLogScale = chk.checked;
   }
   renderSetChart();
+  if (setHistoryData.length > 0) {
+    renderSetHistoryChart();
+  }
 }
 
 function renderSetChart(listMs, setMs) {
@@ -906,6 +909,106 @@ function renderSetChart(listMs, setMs) {
         x: {
           ticks: { color: "#8b93a9" },
           grid:  { color: "rgba(255,255,255,0.05)" }
+        },
+        y: yScales
+      }
+    }
+  });
+}
+
+function renderSetHistoryChart() {
+  var container = document.getElementById("set-history-container");
+  if (!container || setHistoryData.length === 0) return;
+  container.classList.remove("hidden");
+
+  if (setHistoryChartInstance) {
+    setHistoryChartInstance.destroy();
+    setHistoryChartInstance = null;
+  }
+
+  var ctx = document.getElementById("set-history-chart");
+  if (!ctx) return;
+  var ctx2d = ctx.getContext("2d");
+
+  var labels = setHistoryData.map(function(d) { return "N=" + d.size; });
+  var listPoints = setHistoryData.map(function(d) {
+    return setChartLogScale ? Math.max(0.0001, d.listMs) : d.listMs;
+  });
+  var setPoints = setHistoryData.map(function(d) {
+    return setChartLogScale ? Math.max(0.0001, d.setMs) : d.setMs;
+  });
+
+  var yScales = {};
+  if (setChartLogScale) {
+    yScales = {
+      type: "logarithmic",
+      ticks: {
+        color: "#8b93a9",
+        callback: function(value) {
+          return value.toLocaleString() + " ms";
+        }
+      },
+      grid: { color: "rgba(255,255,255,0.05)" }
+    };
+  } else {
+    yScales = {
+      type: "linear",
+      beginAtZero: true,
+      ticks: { color: "#8b93a9" },
+      grid: { color: "rgba(255,255,255,0.05)" }
+    };
+  }
+
+  setHistoryChartInstance = new Chart(ctx2d, {
+    type: "line",
+    data: {
+      labels: labels,
+      datasets: [
+        {
+          label: "List Membership (O(n))",
+          data: listPoints,
+          borderColor: "rgba(251,146,60,1)",
+          backgroundColor: "rgba(251,146,60,0.1)",
+          borderWidth: 3,
+          tension: 0.15,
+          fill: true,
+          pointBackgroundColor: "rgba(251,146,60,1)",
+          pointRadius: 4
+        },
+        {
+          label: "Set Membership (O(1))",
+          data: setPoints,
+          borderColor: "rgba(129,140,248,1)",
+          backgroundColor: "rgba(129,140,248,0.1)",
+          borderWidth: 3,
+          tension: 0.15,
+          fill: true,
+          pointBackgroundColor: "rgba(129,140,248,1)",
+          pointRadius: 4
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: {
+          display: true,
+          labels: { color: "#8b93a9" }
+        },
+        tooltip: {
+          callbacks: {
+            label: function(context) {
+              var idx = context.dataIndex;
+              var originalVal = context.datasetIndex === 0 ? setHistoryData[idx].listMs : setHistoryData[idx].setMs;
+              return " " + context.dataset.label.split(" (")[0] + ": " + originalVal.toFixed(4) + " ms";
+            }
+          }
+        }
+      },
+      scales: {
+        x: {
+          ticks: { color: "#8b93a9" },
+          grid: { color: "rgba(255,255,255,0.05)" }
         },
         y: yScales
       }
