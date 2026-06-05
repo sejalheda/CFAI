@@ -586,7 +586,10 @@ function fillSet(n) {
 
 
 /* ─────────────────────────────────────────────────────────
-   Chart instances (kept to destroy & recreate on each run)
+   CHART.JS VISUALIZATIONS (DAY 7)
+   - Handles real-time rendering of performance metrics
+   - Supports Logarithmic scale toggle for linear-vs-hash comparison
+   - Persists session comparison history in line charts
 ───────────────────────────────────────────────────────── */
 var sortChartInstance = null;
 var setChartInstance  = null;
