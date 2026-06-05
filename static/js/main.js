@@ -591,23 +591,71 @@ function fillSet(n) {
 var sortChartInstance = null;
 var setChartInstance  = null;
 
+var sortChartLogScale = false;
+var lastBubbleMs = 0;
+var lastMergeMs = 0;
+
+function toggleSortLogScale() {
+  var chk = document.getElementById("sort-log-scale-chk");
+  if (chk) {
+    sortChartLogScale = chk.checked;
+  }
+  renderSortChart();
+}
+
 function renderSortChart(bubbleMs, mergeMs) {
   var container = document.getElementById("sort-chart-container");
+  if (!container) return;
   container.classList.remove("hidden");
+
+  if (bubbleMs !== undefined) lastBubbleMs = bubbleMs;
+  if (mergeMs !== undefined) lastMergeMs = mergeMs;
+
+  var bMs = lastBubbleMs;
+  var mMs = lastMergeMs;
 
   if (sortChartInstance) {
     sortChartInstance.destroy();
     sortChartInstance = null;
   }
 
-  var ctx = document.getElementById("sort-chart").getContext("2d");
-  sortChartInstance = new Chart(ctx, {
+  var ctx = document.getElementById("sort-chart");
+  if (!ctx) return;
+  var ctx2d = ctx.getContext("2d");
+
+  var yScales = {};
+  var chartData = [];
+  if (sortChartLogScale) {
+    var displayBubble = Math.max(0.0001, bMs);
+    var displayMerge = Math.max(0.0001, mMs);
+    yScales = {
+      type: "logarithmic",
+      ticks: {
+        color: "#8b93a9",
+        callback: function(value) {
+          return value.toLocaleString() + " ms";
+        }
+      },
+      grid: { color: "rgba(255,255,255,0.05)" }
+    };
+    chartData = [displayBubble, displayMerge];
+  } else {
+    yScales = {
+      type: "linear",
+      beginAtZero: true,
+      ticks: { color: "#8b93a9" },
+      grid: { color: "rgba(255,255,255,0.05)" }
+    };
+    chartData = [bMs, mMs];
+  }
+
+  sortChartInstance = new Chart(ctx2d, {
     type: "bar",
     data: {
       labels: ["Bubble Sort (O(n²))", "Merge Sort (O(n log n))"],
       datasets: [{
         label: "Time (ms)",
-        data: [bubbleMs, mergeMs],
+        data: chartData,
         backgroundColor: ["rgba(248,113,113,0.65)", "rgba(52,211,153,0.65)"],
         borderColor:     ["rgba(248,113,113,1)",    "rgba(52,211,153,1)"],
         borderWidth: 2,
@@ -620,7 +668,10 @@ function renderSortChart(bubbleMs, mergeMs) {
         legend: { display: false },
         tooltip: {
           callbacks: {
-            label: function(ctx) { return " " + ctx.parsed.y.toFixed(4) + " ms"; }
+            label: function(context) { 
+              var originalVal = context.dataIndex === 0 ? bMs : mMs;
+              return " " + originalVal.toFixed(4) + " ms"; 
+            }
           }
         }
       },
@@ -629,11 +680,7 @@ function renderSortChart(bubbleMs, mergeMs) {
           ticks: { color: "#8b93a9" },
           grid:  { color: "rgba(255,255,255,0.05)" }
         },
-        y: {
-          beginAtZero: true,
-          ticks: { color: "#8b93a9" },
-          grid:  { color: "rgba(255,255,255,0.05)" }
-        }
+        y: yScales
       }
     }
   });
