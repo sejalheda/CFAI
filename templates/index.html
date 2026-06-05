@@ -397,8 +397,19 @@
 
           <!-- Chart Container -->
           <div id="set-chart-container" class="chart-container hidden">
-            <h3 class="chart-title">Lookup Time Comparison</h3>
-            <canvas id="set-chart"></canvas>
+            <div class="chart-header">
+              <h3 class="chart-title">Lookup Time Comparison</h3>
+              <div class="chart-controls">
+                <label class="toggle-container">
+                  <input type="checkbox" id="set-log-scale-chk" onchange="toggleSetLogScale()">
+                  <span class="toggle-slider"></span>
+                  <span class="toggle-label">Logarithmic Scale</span>
+                </label>
+              </div>
+            </div>
+            <div class="canvas-wrapper">
+              <canvas id="set-chart"></canvas>
+            </div>
           </div>
         </div>
       </div>
