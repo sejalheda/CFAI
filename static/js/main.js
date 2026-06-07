@@ -1586,3 +1586,24 @@ async function visualizeSetSearch(numbers, target) {
     }
   }
 }
+
+// Back to top scrolling behavior
+document.addEventListener("DOMContentLoaded", function() {
+  var btt = document.getElementById("back-to-top");
+  if (!btt) return;
+  
+  window.addEventListener("scroll", function() {
+    if (window.scrollY > 300) {
+      btt.classList.add("visible");
+    } else {
+      btt.classList.remove("visible");
+    }
+  });
+
+  btt.addEventListener("click", function() {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth"
+    });
+  });
+});
