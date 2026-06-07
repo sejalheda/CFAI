@@ -958,6 +958,13 @@ code {
   border-radius: var(--radius-lg);
   padding: 24px;
   margin-bottom: 32px;
+  overflow-x: auto;
+  transition: border-color var(--transition), box-shadow var(--transition);
+}
+
+.complexity-table-wrapper:hover {
+  border-color: var(--border-light);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.35);
 }
 
 .table-title {
@@ -974,6 +981,15 @@ code {
   border-collapse: collapse;
   text-align: left;
   font-size: .9rem;
+  min-width: 550px;
+}
+
+.complexity-table tr {
+  transition: background-color var(--transition);
+}
+
+.complexity-table tbody tr:hover {
+  background-color: rgba(255, 255, 255, 0.02);
 }
 
 .complexity-table th {
