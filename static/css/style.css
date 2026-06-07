@@ -85,10 +85,16 @@ code {
 }
 
 .gradient-text {
-  background: linear-gradient(90deg, #818cf8, #34d399);
+  background: linear-gradient(90deg, #818cf8, #34d399, #f87171, #818cf8);
+  background-size: 300% auto;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+  animation: shine 8s linear infinite;
+}
+
+@keyframes shine {
+  to { background-position: 300% center; }
 }
 
 /* ─────────────────────────────────────────────────────────
@@ -215,9 +221,45 @@ code {
   filter: blur(80px);
   opacity: .25;
 }
-.orb-1 { width: 420px; height: 420px; background: #818cf8; top: -140px; left: -100px; }
-.orb-2 { width: 340px; height: 340px; background: #34d399; top: 0;     right: -80px; }
-.orb-3 { width: 260px; height: 260px; background: #f87171; bottom: -80px; left: 40%;  }
+.orb-1 {
+  width: 420px;
+  height: 420px;
+  background: #818cf8;
+  top: -140px;
+  left: -100px;
+  animation: float-orb-1 16s ease-in-out infinite;
+}
+.orb-2 {
+  width: 340px;
+  height: 340px;
+  background: #34d399;
+  top: 0;
+  right: -80px;
+  animation: float-orb-2 20s ease-in-out infinite;
+}
+.orb-3 {
+  width: 260px;
+  height: 260px;
+  background: #f87171;
+  bottom: -80px;
+  left: 40%;
+  animation: float-orb-3 18s ease-in-out infinite;
+}
+
+@keyframes float-orb-1 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(30px, -20px) scale(1.05); }
+}
+
+@keyframes float-orb-2 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(-20px, 30px) scale(0.95); }
+}
+
+@keyframes float-orb-3 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(25px, 25px) scale(1.1); }
+}
 
 /* ─────────────────────────────────────────────────────────
    BUTTONS
