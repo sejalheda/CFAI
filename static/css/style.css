@@ -70,6 +70,29 @@ body {
   }
 }
 
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border-light);
+  border-radius: var(--radius-sm);
+  border: 2px solid var(--bg);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-muted);
+}
+
+/* Custom Selection Highlight */
+::selection {
+  background: rgba(129, 140, 248, 0.35);
+  color: var(--text-primary);
+}
+
 /* ─────────────────────────────────────────────────────────
    Utilities
 ───────────────────────────────────────────────────────── */
