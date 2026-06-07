@@ -1166,11 +1166,17 @@ code {
   align-items: center;
   flex-wrap: wrap;
   gap: 16px;
-  background: rgba(255, 255, 255, 0.015);
+  background: var(--bg-card-2);
   border: 1px solid var(--border);
   padding: 16px 20px;
   border-radius: var(--radius-md);
   margin-bottom: 24px;
+  transition: border-color var(--transition), box-shadow var(--transition);
+}
+
+.visualizer-controls:hover {
+  border-color: var(--border-light);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
 }
 
 .btn--vis-control {
@@ -1189,6 +1195,24 @@ code {
 
 .vis-speed-group .range-slider {
   max-width: 180px;
+}
+
+@media (max-width: 600px) {
+  .visualizer-controls {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+  }
+  
+  .vis-speed-group {
+    justify-content: space-between;
+    margin-top: 4px;
+  }
+  
+  .vis-speed-group .range-slider {
+    max-width: none;
+    flex-grow: 1;
+  }
 }
 
 /* Winner Card Glow Effects */
