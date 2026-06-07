@@ -420,6 +420,12 @@ code {
   border-radius: var(--radius-lg);
   padding: 28px 32px;
   margin-bottom: 32px;
+  transition: border-color var(--transition), box-shadow var(--transition);
+}
+
+.input-panel:hover {
+  border-color: var(--border-light);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
 }
 
 .input-group { margin-bottom: 18px; }
@@ -510,6 +516,11 @@ code {
   border: 1px solid var(--border);
   padding: 26px 24px;
   animation: fadeSlideUp .4s ease both;
+  transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition);
+}
+
+.result-card:hover {
+  transform: translateY(-4px);
 }
 
 @keyframes fadeSlideUp {
@@ -518,9 +529,17 @@ code {
 }
 
 .bubble-card  { background: var(--grad-bubble); border-color: rgba(248,113,113,.25); }
+.bubble-card:hover { border-color: var(--bubble); box-shadow: 0 10px 25px rgba(248, 113, 113, 0.15); }
+
 .merge-card   { background: var(--grad-merge);  border-color: rgba(52,211,153,.25); }
+.merge-card:hover { border-color: var(--merge); box-shadow: 0 10px 25px rgba(52, 211, 153, 0.15); }
+
 .list-card    { background: var(--grad-list);   border-color: rgba(251,146,60,.25); }
+.list-card:hover { border-color: var(--list); box-shadow: 0 10px 25px rgba(251, 146, 60, 0.15); }
+
 .set-card     { background: var(--grad-set);    border-color: rgba(129,140,248,.25); }
+.set-card:hover { border-color: var(--set); box-shadow: 0 10px 25px rgba(129, 140, 248, 0.15); }
+
 .winner-divider {
   background: var(--grad-winner);
   border-color: rgba(251,191,36,.35);
@@ -532,6 +551,7 @@ code {
   gap: 6px;
   padding: 30px 20px;
 }
+.winner-divider:hover { border-color: var(--gold); box-shadow: 0 12px 30px rgba(251, 191, 36, 0.25); }
 
 .card-badge {
   font-size: .7rem;
