@@ -1587,23 +1587,46 @@ async function visualizeSetSearch(numbers, target) {
   }
 }
 
-// Back to top scrolling behavior
+// Navigation, Back-to-top, and Mobile Menu Behaviors
 document.addEventListener("DOMContentLoaded", function() {
+  // Back to top behavior
   var btt = document.getElementById("back-to-top");
-  if (!btt) return;
-  
-  window.addEventListener("scroll", function() {
-    if (window.scrollY > 300) {
-      btt.classList.add("visible");
-    } else {
-      btt.classList.remove("visible");
-    }
-  });
-
-  btt.addEventListener("click", function() {
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth"
+  if (btt) {
+    window.addEventListener("scroll", function() {
+      if (window.scrollY > 300) {
+        btt.classList.add("visible");
+      } else {
+        btt.classList.remove("visible");
+      }
     });
-  });
+
+    btt.addEventListener("click", function() {
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+      });
+    });
+  }
+
+  // Mobile nav toggle behavior
+  var menuToggle = document.getElementById("menu-toggle");
+  var headerNav = document.getElementById("header-nav");
+  if (menuToggle && headerNav) {
+    menuToggle.addEventListener("click", function() {
+      var isExpanded = menuToggle.getAttribute("aria-expanded") === "true";
+      menuToggle.setAttribute("aria-expanded", !isExpanded);
+      menuToggle.classList.toggle("open");
+      headerNav.classList.toggle("open");
+    });
+
+    // Close menu upon navigation click
+    var navLinks = headerNav.querySelectorAll(".nav-link");
+    navLinks.forEach(function(link) {
+      link.addEventListener("click", function() {
+        menuToggle.setAttribute("aria-expanded", "false");
+        menuToggle.classList.remove("open");
+        headerNav.classList.remove("open");
+      });
+    });
+  }
 });

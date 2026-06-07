@@ -1060,6 +1060,45 @@ code {
   100% { transform: rotate(360deg); }
 }
 
+/* Mobile Menu Toggle */
+.menu-toggle {
+  display: none;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 22px;
+  height: 16px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  z-index: 101;
+}
+
+.menu-toggle:focus {
+  outline: none;
+}
+
+.hamburger-line {
+  width: 100%;
+  height: 2px;
+  background-color: var(--text-primary);
+  border-radius: 2px;
+  transition: transform var(--transition), opacity var(--transition);
+}
+
+/* Hamburger Transformations when Menu is Open */
+.menu-toggle.open .hamburger-line:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+
+.menu-toggle.open .hamburger-line:nth-child(2) {
+  opacity: 0;
+}
+
+.menu-toggle.open .hamburger-line:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
 /* ─────────────────────────────────────────────────────────
    RESPONSIVE
    ───────────────────────────────────────────────────────── */
@@ -1067,8 +1106,46 @@ code {
   .input-panel { padding: 20px; }
   .chart-container { padding: 20px; }
 }
+
+@media (max-width: 768px) {
+  .menu-toggle {
+    display: flex;
+  }
+
+  .header-nav {
+    position: absolute;
+    top: 60px;
+    left: 0;
+    right: 0;
+    background: rgba(19, 22, 30, 0.96);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+    flex-direction: column;
+    align-items: stretch;
+    padding: 16px 24px;
+    gap: 12px;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(-8px);
+    transition: opacity var(--transition), transform var(--transition);
+  }
+
+  .header-nav.open {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
+  }
+
+  .header-nav .nav-link {
+    width: 100%;
+    text-align: center;
+    padding: 10px;
+    border-radius: var(--radius-sm);
+  }
+}
+
 @media (max-width: 600px) {
-  .header-nav .nav-link:not(.nav-link--github) { display: none; }
   .hero { padding: 70px 20px 60px; }
   .module-section { padding: 56px 16px; }
 }
