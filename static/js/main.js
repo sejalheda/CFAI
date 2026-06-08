@@ -1,6 +1,6 @@
 /*
- * Algorithm Complexity Visualizer — main.js
- * Calls Flask backend at http://127.0.0.1:5000
+ * Algorithm Complexity Visualizer — main.js (v1.0.0)
+ * Calls Flask backend at same-origin (Flask serves the page and api endpoints)
  * Modules: Sorting (Bubble vs Merge) with Live DOM Visualization | Membership (List vs Set)
  */
 
