@@ -5,6 +5,21 @@ from flask import Flask, render_template, request, jsonify
 app = Flask(__name__)
 
 
+def validate_numbers_list(numbers, min_len=2, max_len=100000, name="numbers"):
+    """Validates that a given variable is a list of finite numbers within size bounds."""
+    if not isinstance(numbers, list):
+        return f"'{name}' must be a list of numbers."
+    if len(numbers) < min_len:
+        return f"Please provide at least {min_len} numbers."
+    if len(numbers) > max_len:
+        return f"Maximum {max_len:,} numbers allowed."
+    for idx, x in enumerate(numbers):
+        if not isinstance(x, (int, float)) or not math.isfinite(x):
+            return f"Item at index {idx} in '{name}' is not a valid finite number."
+    return None
+
+
+
 # ─────────────────────────────────────────────────────────
 # Sorting Algorithms
 # ─────────────────────────────────────────────────────────
@@ -111,20 +126,10 @@ def api_sort():
     
     # 2. Validate input list presence and structure
     numbers = data["numbers"]
-    if not isinstance(numbers, list):
-        return jsonify({"error": "'numbers' must be a list of numbers."}), 400
-        
-    # 3. Validate input array length limits (min 2, max 10,000)
-    if len(numbers) < 2:
-        return jsonify({"error": "Please provide at least 2 numbers."}), 400
-        
-    if len(numbers) > 10000:
-        return jsonify({"error": "Maximum 10,000 numbers allowed."}), 400
-        
-    # 4. Verify all elements in list are numeric types (int, float) and finite
-    for idx, x in enumerate(numbers):
-        if not isinstance(x, (int, float)) or not math.isfinite(x):
-            return jsonify({"error": f"Item at index {idx} is not a valid finite number."}), 400
+    err = validate_numbers_list(numbers, min_len=2, max_len=10000)
+    if err:
+        return jsonify({"error": err}), 400
+
             
     # 5. Measure and capture Bubble Sort performance
     bubble_res = measure_sorting_performance(bubble_sort, numbers, is_bubble=True)
@@ -206,23 +211,16 @@ def api_membership():
     if not data or "numbers" not in data:
         return jsonify({"error": "Invalid request. 'numbers' is required."}), 400
     numbers = data["numbers"]
-    if not isinstance(numbers, list):
-        return jsonify({"error": "'numbers' must be a list of numbers."}), 400
-    for idx, x in enumerate(numbers):
-        if not isinstance(x, (int, float)) or not math.isfinite(x):
-            return jsonify({"error": f"Item at index {idx} is not a valid finite number."}), 400
-    if len(numbers) < 2:
-        return jsonify({"error": "Please provide at least 2 numbers."}), 400
-    if len(numbers) > 100000:
-        return jsonify({"error": "Maximum 100,000 numbers allowed."}), 400
+    err = validate_numbers_list(numbers, min_len=2, max_len=100000)
+    if err:
+        return jsonify({"error": err}), 400
+    
     search_targets = []
     if "search_targets" in data:
         targets_input = data["search_targets"]
-        if not isinstance(targets_input, list):
-            return jsonify({"error": "'search_targets' must be a list of numbers."}), 400
-        for idx, x in enumerate(targets_input):
-            if not isinstance(x, (int, float)) or not math.isfinite(x):
-                return jsonify({"error": f"Search target at index {idx} is not a valid finite number."}), 400
+        err_targets = validate_numbers_list(targets_input, min_len=0, max_len=100000, name="search_targets")
+        if err_targets:
+            return jsonify({"error": err_targets}), 400
         search_targets = targets_input
     import random
     if not search_targets:
