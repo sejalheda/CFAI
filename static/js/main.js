@@ -246,6 +246,7 @@ async function visualizeBubbleSort(arr) {
   var statsEl = document.getElementById("bubble-vis-stats");
 
   for (var i = 0; i < n; i++) {
+    var swapped = false;
     for (var j = 0; j < n - i - 1; j++) {
       if (visStopRequested) return;
 
@@ -292,6 +293,7 @@ async function visualizeBubbleSort(arr) {
         }
 
         swaps++;
+        swapped = true;
         if (statsEl) {
           statsEl.textContent = "Comparisons: " + comparisons + " | Swaps: " + swaps;
         }
@@ -310,6 +312,10 @@ async function visualizeBubbleSort(arr) {
     var sortedBar = document.getElementById("bubble-bar-" + (n - i - 1));
     if (sortedBar) {
       sortedBar.classList.add("sorted");
+    }
+
+    if (!swapped) {
+      break;
     }
   }
 
