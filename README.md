@@ -72,7 +72,21 @@ CFAI/
 - Add space complexity comparison
 - Export results as PDF/CSV
 - Deploy to cloud (Render / Railway)
-- Add unit tests for backend
+
+---
+
+## 🧪 Testing
+
+The backend is fully covered by a Python unit testing suite. To execute the tests, run:
+
+```bash
+python run_tests.py
+```
+
+This will automatically discover and run all test cases inside the `tests/` directory:
+- **Sorting Algorithm Core Logic** (`tests/test_sorting.py`)
+- **List vs Set Membership Search Logic** (`tests/test_membership.py`)
+- **Flask REST API Request Validation & Response Payloads** (`tests/test_api.py`)
 
 ---
 
