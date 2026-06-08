@@ -1,4 +1,4 @@
-# ⚡ Algorithm Complexity Visualizer
+# ⚡ Algorithm Complexity Visualizer `v1.0.0`
 
 > *"See the difference — measure it, visualize it, understand it."*
 
@@ -95,5 +95,16 @@ This will automatically discover and run all test cases inside the `tests/` dire
 
 | **Sejal** | 
 | **Bhavya** |
+
+
+---
+
+## 🚀 Release Notes (v1.0.0)
+
+- **Optimized Algorithms**: Added early-exit optimization flag to backend Bubble Sort and frontend visualizer, improving best-case complexity to $O(n)$ comparisons.
+- **Validation & Stability**: Integrated input constraints and type validation checking for float arrays, rejecting `NaN`/`Infinity` values on backend and frontend.
+- **Robust Test Coverage**: Built a comprehensive Python testing package under `tests/` directory with 12 testing blocks covering sorting, membership comparison, and Flask REST API validation.
+- **Production-Ready**: Added WSGI configuration dependencies (`gunicorn`) for stable production deployment.
+
 
 
