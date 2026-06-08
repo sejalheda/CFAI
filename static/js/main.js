@@ -17,7 +17,7 @@ function parseNumbers(raw) {
     .map(function(s) { return s.trim(); })
     .filter(function(s) { return s !== ""; })
     .map(function(s) { return parseFloat(s); })
-    .filter(function(n) { return !isNaN(n); });
+    .filter(function(n) { return isFinite(n); });
 }
 
 /** Format seconds → human-readable string */
