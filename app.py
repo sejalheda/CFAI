@@ -18,11 +18,15 @@ def bubble_sort(arr):
     comparisons = 0
     swaps = 0
     for i in range(n):
+        swapped = False
         for j in range(0, n - i - 1):
             comparisons += 1
             if a[j] > a[j + 1]:
                 a[j], a[j + 1] = a[j + 1], a[j]
                 swaps += 1
+                swapped = True
+        if not swapped:
+            break
     return a, comparisons, swaps
 
 
