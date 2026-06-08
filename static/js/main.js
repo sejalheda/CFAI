@@ -68,13 +68,21 @@ function metricRow(key, value) {
 /** Show error message */
 function showError(boxId, msg) {
   var box = document.getElementById(boxId);
-  box.textContent = "⚠ " + msg;
+  if (!box) return;
+  box.innerHTML = '<span class="error-icon">⚠</span> <span class="error-msg-content">' + msg + '</span>';
   box.classList.remove("hidden");
+  box.classList.remove("shake-anim");
+  void box.offsetWidth; // Force DOM reflow
+  box.classList.add("shake-anim");
 }
 
 /** Hide error message */
 function hideError(boxId) {
-  document.getElementById(boxId).classList.add("hidden");
+  var box = document.getElementById(boxId);
+  if (box) {
+    box.classList.add("hidden");
+    box.classList.remove("shake-anim");
+  }
 }
 
 
