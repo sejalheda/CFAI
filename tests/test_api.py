@@ -62,5 +62,63 @@ class TestAPI(unittest.TestCase):
         response = self.app.post('/api/sort', data=json.dumps({"numbers": [1, float('inf')]}), content_type='application/json')
         self.assertEqual(response.status_code, 400)
 
+    def test_api_membership_success(self):
+        payload = {
+            "numbers": [10, 20, 30, 40, 50, 10, 20],
+            "search_targets": [20, 99]
+        }
+        response = self.app.post('/api/membership',
+                                 data=json.dumps(payload),
+                                 content_type='application/json')
+        self.assertEqual(response.status_code, 200)
+        data = json.loads(response.data)
+        
+        self.assertIn("list_membership", data)
+        self.assertIn("set_membership", data)
+        self.assertEqual(data["input_size"], 7)
+        self.assertEqual(data["unique_elements"], 5)
+        self.assertEqual(data["duplicate_elements"], 2)
+        self.assertEqual(data["targets_searched"], 2)
+        self.assertIn("winner", data)
+        self.assertIn("speedup", data)
+        
+        # Test default targets generation when search_targets is omitted
+        payload_no_targets = {"numbers": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]}
+        response_no_targets = self.app.post('/api/membership',
+                                            data=json.dumps(payload_no_targets),
+                                            content_type='application/json')
+        self.assertEqual(response_no_targets.status_code, 200)
+        data_no_targets = json.loads(response_no_targets.data)
+        self.assertTrue(data_no_targets["targets_searched"] >= 100)
+
+    def test_api_membership_validation_errors(self):
+        # Missing payload
+        response = self.app.post('/api/membership', data=json.dumps({}), content_type='application/json')
+        self.assertEqual(response.status_code, 400)
+        
+        # Numbers not list
+        response = self.app.post('/api/membership', data=json.dumps({"numbers": 123}), content_type='application/json')
+        self.assertEqual(response.status_code, 400)
+        
+        # Numbers too short
+        response = self.app.post('/api/membership', data=json.dumps({"numbers": [1]}), content_type='application/json')
+        self.assertEqual(response.status_code, 400)
+        
+        # Non-numeric item
+        response = self.app.post('/api/membership', data=json.dumps({"numbers": [1, "two"]}), content_type='application/json')
+        self.assertEqual(response.status_code, 400)
+        
+        # Non-finite item
+        response = self.app.post('/api/membership', data=json.dumps({"numbers": [1, float('nan')]}), content_type='application/json')
+        self.assertEqual(response.status_code, 400)
+        
+        # Search targets not list
+        response = self.app.post('/api/membership', data=json.dumps({"numbers": [1, 2], "search_targets": 123}), content_type='application/json')
+        self.assertEqual(response.status_code, 400)
+        
+        # Search targets non-finite item
+        response = self.app.post('/api/membership', data=json.dumps({"numbers": [1, 2], "search_targets": [1, float('inf')]}), content_type='application/json')
+        self.assertEqual(response.status_code, 400)
+
 if __name__ == '__main__':
     unittest.main()
