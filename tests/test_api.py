@@ -82,6 +82,11 @@ class TestAPI(unittest.TestCase):
         self.assertIn("winner", data)
         self.assertIn("speedup", data)
         
+        t_list = data["list_membership"]["elapsed_seconds"]
+        t_set = data["set_membership"]["elapsed_seconds"]
+        expected_winner = "List Membership" if t_list < t_set else "Set Membership"
+        self.assertEqual(data["winner"], expected_winner)
+        
         # Test default targets generation when search_targets is omitted
         payload_no_targets = {"numbers": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]}
         response_no_targets = self.app.post('/api/membership',
