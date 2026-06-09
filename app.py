@@ -157,36 +157,40 @@ def api_sort():
     })
 def measure_list_membership(numbers_list, targets):
     """Measures performance of checking membership in a Python list."""
+    iterations = max(1, min(100000, 100000 // len(targets)))
     t_start = time.perf_counter()
     found = 0
-    for target in targets:
-        if target in numbers_list:
-            found += 1
+    for _ in range(iterations):
+        for target in targets:
+            if target in numbers_list:
+                found += 1
     t_end = time.perf_counter()
-    elapsed_seconds = t_end - t_start
+    elapsed_seconds = (t_end - t_start) / iterations
     elapsed_ms = elapsed_seconds * 1000
     return {
         "elapsed_seconds": elapsed_seconds,
         "elapsed_ms": round(elapsed_ms, 6),
-        "found": found,
+        "found": found // iterations,
         "description": "Linear Search - O(n)"
     }
 
 def measure_set_membership(numbers_list, targets):
     """Measures performance of checking membership in a Python set."""
     numbers_set = set(numbers_list)
+    iterations = max(1, min(100000, 100000 // len(targets)))
     t_start = time.perf_counter()
     found = 0
-    for target in targets:
-        if target in numbers_set:
-            found += 1
+    for _ in range(iterations):
+        for target in targets:
+            if target in numbers_set:
+                found += 1
     t_end = time.perf_counter()
-    elapsed_seconds = t_end - t_start
+    elapsed_seconds = (t_end - t_start) / iterations
     elapsed_ms = elapsed_seconds * 1000
     return {
         "elapsed_seconds": elapsed_seconds,
         "elapsed_ms": round(elapsed_ms, 6),
-        "found": found,
+        "found": found // iterations,
         "description": "Hash Table - O(1)"
     }
 
