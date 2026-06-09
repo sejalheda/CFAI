@@ -528,6 +528,9 @@ function selectDistribution(dist) {
       }
     }
   });
+  // Auto-generate array numbers based on the new distribution and current size slider value
+  var size = parseInt(document.getElementById('sort-size-slider').value) || 100;
+  fillSort(size);
 }
 
 /** Update the text showing the size selected by the slider */
