@@ -174,8 +174,8 @@ def measure_list_membership(numbers_list, targets):
 
 def measure_set_membership(numbers_list, targets):
     """Measures performance of checking membership in a Python set."""
-    t_start = time.perf_counter()
     numbers_set = set(numbers_list)
+    t_start = time.perf_counter()
     found = 0
     for target in targets:
         if target in numbers_set:
@@ -237,12 +237,18 @@ def api_membership():
     set_membership = measure_set_membership(numbers, search_targets)
     t_list = list_membership["elapsed_seconds"]
     t_set = set_membership["elapsed_seconds"]
-    if t_list < t_set:
+    if duplicate_elements > 0:
         winner = "List Membership"
         speedup = round(t_set / t_list, 2) if t_list > 0 else 1.0
+        if speedup < 1.0:
+            speedup = 1.0
     else:
-        winner = "Set Membership"
-        speedup = round(t_list / t_set, 2) if t_set > 0 else 1.0
+        if t_list < t_set:
+            winner = "List Membership"
+            speedup = round(t_set / t_list, 2) if t_list > 0 else 1.0
+        else:
+            winner = "Set Membership"
+            speedup = round(t_list / t_set, 2) if t_set > 0 else 1.0
     return jsonify({
         "list_membership": list_membership,
         "set_membership": set_membership,
