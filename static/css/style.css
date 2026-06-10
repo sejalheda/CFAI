@@ -832,6 +832,33 @@ code {
   font-weight: 500;
 }
 
+/* ─────────────────────────────────────────────────────────
+   WARNING BOX
+───────────────────────────────────────────────────────── */
+.warning-box {
+  background: rgba(251,191,36,.08);
+  border: 1px solid rgba(251,191,36,.3);
+  color: var(--gold);
+  border-radius: var(--radius-md);
+  padding: 14px 20px;
+  font-size: .9rem;
+  margin-top: 12px;
+  animation: fadeSlideUp .3s ease both;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.warning-icon {
+  font-size: 1.15rem;
+  color: var(--gold);
+  flex-shrink: 0;
+}
+
+.warning-msg-content {
+  font-weight: 500;
+}
+
 /* Shake Animation for Input Error Feedback */
 .shake-anim {
   animation: shake 0.4s ease-in-out;

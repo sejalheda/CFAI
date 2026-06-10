@@ -85,6 +85,26 @@ function hideError(boxId) {
   }
 }
 
+/** Show warning message */
+function showWarning(boxId, msg) {
+  var box = document.getElementById(boxId);
+  if (!box) return;
+  box.innerHTML = '<span class="warning-icon">⚠</span> <span class="warning-msg-content">' + msg + '</span>';
+  box.classList.remove("hidden");
+  box.classList.remove("shake-anim");
+  void box.offsetWidth; // Force DOM reflow
+  box.classList.add("shake-anim");
+}
+
+/** Hide warning message */
+function hideWarning(boxId) {
+  var box = document.getElementById(boxId);
+  if (box) {
+    box.classList.add("hidden");
+    box.classList.remove("shake-anim");
+  }
+}
+
 
 /* ─────────────────────────────────────────────────────────
    Live Visualizer State & Dom Initialization
@@ -1057,6 +1077,7 @@ function exportSetHistoryChart() {
 
 function runSort() {
   hideError("sort-error");
+  hideWarning("sort-warning");
   var raw = document.getElementById("sort-input").value;
   var numbers = parseNumbers(raw);
 
@@ -1064,6 +1085,13 @@ function runSort() {
     showError("sort-error", "Please enter at least 2 numbers (or use a Quick Fill button).");
     return;
   }
+
+  var arraySize = parseInt(document.getElementById('sort-size-slider').value) || 100;
+  if (numbers.length > arraySize) {
+    showWarning("sort-warning", "Array overflow! Only the first " + arraySize + " elements were taken.");
+    numbers = numbers.slice(0, arraySize);
+  }
+
   if (numbers.length > 10000) {
     showError("sort-error", "Maximum 10,000 numbers allowed.");
     return;
