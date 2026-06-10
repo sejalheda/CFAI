@@ -196,9 +196,12 @@ async function toggleVisPlayback() {
   if (!visPlaying) {
     var raw = document.getElementById("sort-input").value;
     var numbers = parseNumbers(raw);
+    var arraySize = parseInt(document.getElementById('sort-size-slider').value) || 100;
+    if (numbers.length > arraySize) {
+      numbers = numbers.slice(0, arraySize);
+    }
 
     if (numbers.length < 2 || numbers.length > 50) {
-      showError("sort-error", "Please enter between 2 and 50 numbers to run the live visualizer.");
       return;
     }
 
@@ -254,6 +257,10 @@ function resetVisPlayback() {
 
     var raw = document.getElementById("sort-input").value;
     var numbers = parseNumbers(raw);
+    var arraySize = parseInt(document.getElementById('sort-size-slider').value) || 100;
+    if (numbers.length > arraySize) {
+      numbers = numbers.slice(0, arraySize);
+    }
     if (numbers.length >= 2 && numbers.length <= 50) {
       drawVisualizerBars(numbers);
     }
