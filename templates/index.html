@@ -269,6 +269,56 @@
         </div>
 
         <div class="input-panel">
+          <!-- Entry Mode Toggle -->
+          <div class="entry-mode-group">
+            <label class="input-label">Entry Mode</label>
+            <div class="segment-control">
+              <button id="mode-manual-btn" class="segment-btn active" type="button" onclick="setEntryMode('manual')">Manual Entry</button>
+              <button id="mode-auto-btn" class="segment-btn" type="button" onclick="setEntryMode('auto')">Auto-Generate Examples</button>
+            </div>
+          </div>
+
+          <!-- Scenario Selection (visible only in auto mode) -->
+          <div id="scenarios-container" class="scenarios-container hidden">
+            <label class="input-label">Select Example Scenario</label>
+            <div class="scenario-chips">
+              <button type="button" class="scenario-chip" id="chip-first" onclick="applyScenario('first')">First Element Search</button>
+              <button type="button" class="scenario-chip" id="chip-middle" onclick="applyScenario('middle')">Middle Element Search</button>
+              <button type="button" class="scenario-chip" id="chip-last" onclick="applyScenario('last')">Last Element Search</button>
+              <button type="button" class="scenario-chip" id="chip-missing" onclick="applyScenario('missing')">Missing Element</button>
+              <button type="button" class="scenario-chip" id="chip-duplicates" onclick="applyScenario('duplicates')">Duplicate Values</button>
+              <button type="button" class="scenario-chip" id="chip-large" onclick="applyScenario('large')">Large Dataset</button>
+              <button type="button" class="scenario-chip" id="chip-ordered" onclick="applyScenario('ordered')">Ordered Data</button>
+              <button type="button" class="scenario-chip" id="chip-index" onclick="applyScenario('index')">Index Access</button>
+              <button type="button" class="scenario-chip" id="chip-unique" onclick="applyScenario('unique')">Unique Elements</button>
+              <button type="button" class="scenario-chip" id="chip-dup-detect" onclick="applyScenario('dup-detect')">Duplicate Detection</button>
+            </div>
+
+            <!-- Information Panel below scenarios -->
+            <div id="scenario-info-panel" class="scenario-info-panel hidden">
+              <div class="info-header">
+                <span class="info-title-icon">⚡</span>
+                <span class="info-title">Scenario Analysis</span>
+              </div>
+              <div class="info-content-grid">
+                <div class="info-field">
+                  <span class="info-label">Scenario</span>
+                  <span class="info-value" id="info-scenario-name">-</span>
+                </div>
+                <div class="info-field">
+                  <span class="info-value-badge" id="info-scenario-winner-badge">
+                    <span class="info-label">Winner</span>
+                    <span class="info-value" id="info-scenario-winner">-</span>
+                  </span>
+                </div>
+                <div class="info-field">
+                  <span class="info-label">Reason</span>
+                  <span class="info-value" id="info-scenario-reason">-</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
           <div class="input-group">
             <label class="input-label" for="set-input">Base Elements List (comma-separated)</label>
             <textarea id="set-input" class="input-textarea" placeholder="e.g., 10, 20, 30, 40, 50" rows="3"></textarea>

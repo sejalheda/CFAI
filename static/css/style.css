@@ -1568,3 +1568,208 @@ code {
   pointer-events: auto;
   transform: translateY(0);
 }
+
+/* ─────────────────────────────────────────────────────────
+   Entry Mode & Scenarios Styling
+   ───────────────────────────────────────────────────────── */
+
+.entry-mode-group {
+  margin-bottom: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.segment-control {
+  display: inline-flex;
+  background: var(--bg);
+  border: 1px solid var(--border-light);
+  padding: 3px;
+  border-radius: var(--radius-md);
+  width: fit-content;
+}
+
+.segment-btn {
+  background: transparent;
+  border: none;
+  outline: none;
+  color: var(--text-secondary);
+  padding: 8px 18px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  font-family: var(--font-body);
+  border-radius: calc(var(--radius-md) - 3px);
+  cursor: pointer;
+  transition: color var(--transition), background-color var(--transition), box-shadow var(--transition);
+}
+
+.segment-btn:hover {
+  color: var(--text-primary);
+}
+
+.segment-btn.active {
+  background-color: var(--set);
+  color: #fff;
+  box-shadow: 0 2px 8px rgba(129, 140, 248, 0.4);
+}
+
+.scenarios-container {
+  margin-bottom: 24px;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.015);
+  border: 1px dashed var(--border-light);
+  border-radius: var(--radius-md);
+  animation: fadeSlideUp var(--transition) both;
+}
+
+.scenario-chips {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 10px;
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+
+.scenario-chip {
+  background: var(--bg-card-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: var(--text-primary);
+  padding: 10px 14px;
+  font-size: 0.82rem;
+  font-family: var(--font-body);
+  font-weight: 500;
+  cursor: pointer;
+  text-align: left;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: all var(--transition);
+}
+
+.scenario-chip::before {
+  content: "•";
+  color: var(--text-muted);
+  font-weight: bold;
+  font-size: 1.1rem;
+  transition: color var(--transition);
+}
+
+.scenario-chip:hover {
+  background: var(--bg);
+  border-color: var(--set);
+  box-shadow: 0 0 10px rgba(129, 140, 248, 0.15);
+  transform: translateY(-1px);
+}
+
+.scenario-chip:hover::before {
+  color: var(--set);
+}
+
+.scenario-chip.active {
+  background: rgba(129, 140, 248, 0.12);
+  border-color: var(--set);
+  color: var(--set);
+  font-weight: 600;
+}
+
+.scenario-chip.active::before {
+  color: var(--set);
+}
+
+/* Scenario Info Panel */
+.scenario-info-panel {
+  background: linear-gradient(135deg, rgba(24, 27, 36, 0.95) 0%, rgba(13, 15, 20, 0.98) 100%);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-md);
+  padding: 16px 20px;
+  margin-top: 15px;
+  animation: fadeSlideUp var(--transition) both;
+}
+
+.scenario-info-panel.hidden {
+  display: none !important;
+}
+
+.info-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 8px;
+}
+
+.info-title-icon {
+  font-size: 1.1rem;
+  color: var(--set);
+}
+
+.info-title {
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: var(--text-primary);
+}
+
+.info-content-grid {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr 2fr;
+  gap: 16px;
+}
+
+@media (max-width: 600px) {
+  .info-content-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+}
+
+.info-field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.info-field .info-label {
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--text-secondary);
+}
+
+.info-field .info-value {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.info-value-badge {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.info-value-badge .info-value {
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  padding: 2px 8px;
+  border-radius: 4px;
+  width: fit-content;
+  text-transform: uppercase;
+}
+
+.info-value-badge .info-value.winner-set {
+  background: rgba(129, 140, 248, 0.15);
+  color: var(--set);
+  border: 1px solid rgba(129, 140, 248, 0.3);
+}
+
+.info-value-badge .info-value.winner-list {
+  background: rgba(251, 146, 60, 0.15);
+  color: var(--list);
+  border: 1px solid rgba(251, 146, 60, 0.3);
+}
+

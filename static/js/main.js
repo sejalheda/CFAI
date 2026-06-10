@@ -1669,3 +1669,163 @@ document.addEventListener("DOMContentLoaded", function() {
     });
   }
 });
+
+/* ─────────────────────────────────────────────────────────
+   Entry Mode & Scenarios Interaction
+   ───────────────────────────────────────────────────────── */
+
+var currentEntryMode = "manual";
+
+function setEntryMode(mode) {
+  currentEntryMode = mode;
+  var manualBtn = document.getElementById("mode-manual-btn");
+  var autoBtn = document.getElementById("mode-auto-btn");
+  var scenariosContainer = document.getElementById("scenarios-container");
+  var infoPanel = document.getElementById("scenario-info-panel");
+
+  if (mode === "manual") {
+    if (manualBtn) manualBtn.classList.add("active");
+    if (autoBtn) autoBtn.classList.remove("active");
+    if (scenariosContainer) scenariosContainer.classList.add("hidden");
+    if (infoPanel) infoPanel.classList.add("hidden");
+    
+    // Clear chip selections
+    var chips = document.querySelectorAll(".scenario-chip");
+    chips.forEach(function(chip) {
+      chip.classList.remove("active");
+    });
+  } else {
+    if (manualBtn) manualBtn.classList.remove("active");
+    if (autoBtn) autoBtn.classList.add("active");
+    if (scenariosContainer) scenariosContainer.classList.remove("hidden");
+  }
+}
+
+function applyScenario(type) {
+  var setInput = document.getElementById("set-input");
+  var targetInput = document.getElementById("set-target-input");
+  var infoPanel = document.getElementById("scenario-info-panel");
+
+  var scenarioName = "";
+  var winner = "";
+  var winnerClass = "";
+  var reason = "";
+  
+  var baseElementsVal = "";
+  var targetVal = "";
+
+  switch (type) {
+    case "first":
+      baseElementsVal = "1, 2, 3, 4, 5, 6, 7, 8, 9, 10";
+      targetVal = "1";
+      scenarioName = "First Element Search";
+      winner = "Set";
+      winnerClass = "winner-set";
+      reason = "O(1) average lookup";
+      break;
+    case "middle":
+      baseElementsVal = "1, 2, 3, 4, 5, 6, 7, 8, 9, 10";
+      targetVal = "5";
+      scenarioName = "Middle Element Search";
+      winner = "Set";
+      winnerClass = "winner-set";
+      reason = "Hash-based lookup";
+      break;
+    case "last":
+      baseElementsVal = "1, 2, 3, 4, 5, 6, 7, 8, 9, 10";
+      targetVal = "10";
+      scenarioName = "Last Element Search";
+      winner = "Set";
+      winnerClass = "winner-set";
+      reason = "O(1) average lookup";
+      break;
+    case "missing":
+      baseElementsVal = "1, 2, 3, 4, 5, 6, 7, 8, 9, 10";
+      targetVal = "99";
+      scenarioName = "Missing Element";
+      winner = "Set";
+      winnerClass = "winner-set";
+      reason = "O(1) average lookup";
+      break;
+    case "duplicates":
+      baseElementsVal = "1, 2, 2, 2, 3, 4, 5";
+      targetVal = "2";
+      scenarioName = "Duplicate Values";
+      winner = "List";
+      winnerClass = "winner-list";
+      reason = "Keeps duplicates";
+      break;
+    case "large":
+      var arr = [];
+      for (var i = 1; i <= 10000; i++) {
+        arr.push(i);
+      }
+      baseElementsVal = arr.join(", ");
+      targetVal = "10000";
+      scenarioName = "Large Dataset";
+      winner = "Set";
+      winnerClass = "winner-set";
+      reason = "O(1) average lookup";
+      break;
+    case "ordered":
+      baseElementsVal = "5, 2, 8, 1";
+      targetVal = "5";
+      scenarioName = "Ordered Data";
+      winner = "List";
+      winnerClass = "winner-list";
+      reason = "Preserves sequence";
+      break;
+    case "index":
+      baseElementsVal = "10, 20, 30, 40, 50";
+      targetVal = "40";
+      scenarioName = "Index Access";
+      winner = "List";
+      winnerClass = "winner-list";
+      reason = "Direct O(1) indexing";
+      break;
+    case "unique":
+      baseElementsVal = "1, 1, 1, 2, 2, 3, 3, 4";
+      targetVal = "2";
+      scenarioName = "Unique Elements";
+      winner = "Set";
+      winnerClass = "winner-set";
+      reason = "Removes duplicates automatically";
+      break;
+    case "dup-detect":
+      baseElementsVal = "1, 2, 3, 4, 5, 2, 7, 8";
+      targetVal = "2";
+      scenarioName = "Duplicate Detection";
+      winner = "Set";
+      winnerClass = "winner-set";
+      reason = "Efficient uniqueness checks";
+      break;
+  }
+
+  // Populate inputs
+  if (setInput) setInput.value = baseElementsVal;
+  if (targetInput) targetInput.value = targetVal;
+
+  // Highlight active chip
+  var chips = document.querySelectorAll(".scenario-chip");
+  chips.forEach(function(chip) {
+    chip.classList.remove("active");
+  });
+  var activeChip = document.getElementById("chip-" + type);
+  if (activeChip) activeChip.classList.add("active");
+
+  // Populate info panel
+  var infoName = document.getElementById("info-scenario-name");
+  var infoWinner = document.getElementById("info-scenario-winner");
+  var infoReason = document.getElementById("info-scenario-reason");
+
+  if (infoName) infoName.textContent = scenarioName;
+  if (infoWinner) {
+    infoWinner.textContent = winner;
+    infoWinner.className = "info-value " + winnerClass;
+  }
+  if (infoReason) infoReason.textContent = reason;
+
+  // Show info panel
+  if (infoPanel) infoPanel.classList.remove("hidden");
+}
+
