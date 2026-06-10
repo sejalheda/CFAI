@@ -176,11 +176,11 @@ def measure_list_membership(numbers_list, targets):
 
 def measure_set_membership(numbers_list, targets):
     """Measures performance of checking membership in a Python set."""
-    numbers_set = set(numbers_list)
     iterations = max(1, min(100000, 100000 // len(targets)))
     t_start = time.perf_counter()
     found = 0
     for _ in range(iterations):
+        numbers_set = set(numbers_list)
         for target in targets:
             if target in numbers_set:
                 found += 1

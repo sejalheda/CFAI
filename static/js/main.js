@@ -517,7 +517,7 @@ var currentSortDistribution = 'random';
 /** Select the active array distribution preset */
 function selectDistribution(dist) {
   currentSortDistribution = dist;
-  var buttons = ['random', 'sorted', 'reversed', 'almost'];
+  var buttons = ['random', 'sorted', 'reversed'];
   buttons.forEach(function(b) {
     var btn = document.getElementById('preset-' + b);
     if (btn) {
@@ -554,19 +554,6 @@ function generateArrayWithDistribution(size, dist) {
   } else if (dist === 'reversed') {
     for (var i = size; i >= 1; i--) {
       arr.push(i);
-    }
-  } else if (dist === 'almost') {
-    for (var i = 1; i <= size; i++) {
-      arr.push(i);
-    }
-    // Perform swaps in about 10% of elements to make it "almost sorted"
-    var swapsCount = Math.max(1, Math.floor(size * 0.05));
-    for (var s = 0; s < swapsCount; s++) {
-      var i1 = Math.floor(Math.random() * size);
-      var i2 = Math.floor(Math.random() * size);
-      var temp = arr[i1];
-      arr[i1] = arr[i2];
-      arr[i2] = temp;
     }
   } else {
     // Default is random
