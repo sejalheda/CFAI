@@ -1214,8 +1214,12 @@ function runSet() {
   document.getElementById("set-results").classList.add("hidden");
   document.getElementById("set-chart-container").classList.add("hidden");
 
+  var activeChip = document.querySelector(".scenario-chip.active");
+  var scenarioType = activeChip ? activeChip.id.replace("chip-", "") : null;
+
   var payload = { numbers: numbers };
   if (targets.length > 0) { payload.search_targets = targets; }
+  if (scenarioType) { payload.scenario_type = scenarioType; }
 
   // Auto-run or clear live visualizer based on input size
   if (numbers.length >= 2 && numbers.length <= 30) {
@@ -1666,6 +1670,30 @@ document.addEventListener("DOMContentLoaded", function() {
         menuToggle.classList.remove("open");
         headerNav.classList.remove("open");
       });
+    });
+  }
+
+  // Deactivate active scenario chips on manual edits
+  var setInput = document.getElementById("set-input");
+  var targetInput = document.getElementById("set-target-input");
+  if (setInput) {
+    setInput.addEventListener("input", function() {
+      var activeChip = document.querySelector(".scenario-chip.active");
+      if (activeChip) {
+        activeChip.classList.remove("active");
+        var infoPanel = document.getElementById("scenario-info-panel");
+        if (infoPanel) infoPanel.classList.add("hidden");
+      }
+    });
+  }
+  if (targetInput) {
+    targetInput.addEventListener("input", function() {
+      var activeChip = document.querySelector(".scenario-chip.active");
+      if (activeChip) {
+        activeChip.classList.remove("active");
+        var infoPanel = document.getElementById("scenario-info-panel");
+        if (infoPanel) infoPanel.classList.add("hidden");
+      }
     });
   }
 });
